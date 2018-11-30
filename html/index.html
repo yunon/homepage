@@ -31,7 +31,6 @@
       background-image: url(pat3.jpg);
       height: 100%;
       width: 100%;
-
       margin-top: 9px;
       color: #364e96;
       letter-spacing: 0.6em;
@@ -58,49 +57,52 @@
     	width: 100%;
     	background-color: #364e96;
     }
-    ul > li{
+    ul > .row > li{
     	display: inline-block;
     }
-    ul > li > a{
-    	padding: 15px 30px;
+    ul > .row > li > a{
+    	padding: 10px 20px;
     	display: block;
-    	font-size: 0.8em;
+    	font-size: 1.1em;
     	text-transform: uppercase;
     	letter-spacing: .2em;
     }
-    ul > li > span{
+    ul > .row > li > span{
     	margin-left: 1.2em;
     }
-    ul > li:hover > a{
+    ul > .row > li:hover > a{
     	background-color: #efefef;
     	color: #444;
     }
 
     /* Submenu */
 
-    ul li ul{
+    ul .row li ul{
     	position: absolute;
-    	/*left: 0em;*/
+      right: 0;
+      left: 0;
+      padding-right: 15px;
+      padding-left: 15px;
     }
-    ul li ul li{
+    ul .row li ul li{
     	display: block;
+      background-color: #efefef;
     }
-    ul li ul li a{
+    ul .row li ul li a{
     	background-color: #efefef;
     	color: #444;
+      padding: 10px 20px;
+    	display: block;
+    	font-size: 1.1em;
+    	text-transform: uppercase;
+    	letter-spacing: .2em;
     }
-    ul li ul li a:hover{
+    ul .row li ul li a:hover{
     	background-color: #ddd;
     }
 
-    ul #li{
-      position: absolute;
-      right: 0;
-      padding-right: 2em;
-    }
     ul{
-      padding-left: 2em;
-      padding-right: 2em;
+      padding-left: 0;
     }
 
     /*	Sample01
@@ -128,15 +130,19 @@
 
         <!-- 選択バー -->
         <ul>
-          <li><a href="#">Menu01</a></li>
-          <li><a href="#">Menu02</a></li>
-          <li id="li"><a href="#">Menu03  <span>▼</span></a>
-            <ul>
-              <li><a href="#">Sub-menu01</a></li>
-              <li><a href="#">Sub-menu02</a></li>
-              <li><a href="#">Sub-menu03</a></li>
-            </ul>
-          </li>
+          <div class="row">
+
+            <li class="col-sm-4"><a href="#">HOME</a></li>
+            <li class="col-sm-4"><a href="#">SUBMIT</a></li>
+            <li class="col-sm-4"><a href="#">MENU  <span>▼</span></a>
+              <ul>
+                <li><a href="#">Sub-menu01</a></li>
+                <li><a href="#">Sub-menu02</a></li>
+                <li><a href="#">Sub-menu03</a></li>
+              </ul>
+            </li>
+
+          </div>
         </ul>
         </header>
 
