@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+    <style>
+
+    body{
+    background-image: url(pat2.jpg);
+    }
+    .mask{
+      margin: 0px;
+      padding: 0px;
+    }
+    h1 {
+    padding: 0.5em 0;/*上下の余白*/
+    border-top: solid 3px #364e96;/*上線*/
+    border-bottom: solid 3px #364e96;/*下線*/
+    margin: 0;
+    font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
+    }
+
+
+    .mask h1{
+      background-image: url(pat3.jpg);
+      height: 100%;
+      width: 100%;
+
+      margin-top: 9px;
+      color: #364e96;
+      letter-spacing: 0.6em;
+      text-align: center;
+      font-size: 50px;
+      font-weight: bold;
+    }
+
+    a{
+    	color: #fff;
+    	text-decoration: none;
+    }
+    a:hover{
+    	color: #444;
+    	background-color: #efefef;
+    }
+    .content{
+    	width: 980px;
+    	margin: 0 auto;
+    	padding: 60px 40px;
+    	background-color: #fff;
+    }
+
+    /* Menu */
+
+    header{
+    	margin-bottom: 13em;
+    	position: relative;
+    	width: 100%;
+    	background-color: #364e96;
+    }
+    ul > li{
+    	display: inline-block;
+    }
+    ul > li > a{
+    	padding: 15px 30px;
+    	display: block;
+    	font-size: 0.8em;
+    	text-transform: uppercase;
+    	letter-spacing: .2em;
+    }
+    ul > li > span{
+    	margin-left: 1.2em;
+    }
+    ul > li:hover > a{
+    	background-color: #efefef;
+    	color: #444;
+    }
+
+    /* Submenu */
+
+    ul li ul{
+    	position: absolute;
+    	left: 0;
+    }
+    ul li ul li{
+    	display: block;
+    }
+    ul li ul li a{
+    	background-color: #efefef;
+    	color: #444;
+    }
+    ul li ul li a:hover{
+    	background-color: #ddd;
+    }
+
+    /*	Sample01
+    ------------------------------------------*/
+
+    .sample01 ul li ul{
+    	display: none;
+    }
+    .sample01 ul li:hover ul{
+    	display: block;
+    }
+
+    </style>
+
+  </head>
+  <body>
+
+    <div class="container">
+
+        <!-- タイトル -->
+        <div class="mask">
+        <h1>自分用ソース置き場</h1>
+        </div>
+        <header class="sample01">
+
+        <!-- 選択バー -->
+        <ul>
+          <li><a href="#">Menu01 <span>▼</span></a>
+            <ul>
+              <li><a href="#">Sub-menu01</a></li>
+              <li><a href="#">Sub-menu02</a></li>
+              <li><a href="#">Sub-menu03</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Menu02</a></li>
+          <li><a href="#">Menu03</a></li>
+        </ul>
+        </header>
+
+    </div>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  </body>
+</html>
