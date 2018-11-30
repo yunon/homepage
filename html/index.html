@@ -47,18 +47,13 @@
     a:hover{
     	color: #444;
     	background-color: #efefef;
-    }
-    .content{
-    	width: 980px;
-    	margin: 0 auto;
-    	padding: 60px 40px;
-    	background-color: #fff;
+      text-decoration: none;
     }
 
     /* Menu */
 
     header{
-    	margin-bottom: 13em;
+    	margin-bottom: 1.5em;
     	position: relative;
     	width: 100%;
     	background-color: #364e96;
@@ -85,7 +80,7 @@
 
     ul li ul{
     	position: absolute;
-    	left: 0;
+    	/*left: 0em;*/
     }
     ul li ul li{
     	display: block;
@@ -96,6 +91,16 @@
     }
     ul li ul li a:hover{
     	background-color: #ddd;
+    }
+
+    ul #li{
+      position: absolute;
+      right: 0;
+      padding-right: 2em;
+    }
+    ul{
+      padding-left: 2em;
+      padding-right: 2em;
     }
 
     /*	Sample01
@@ -123,15 +128,15 @@
 
         <!-- 選択バー -->
         <ul>
-          <li><a href="#">Menu01 <span>▼</span></a>
+          <li><a href="#">Menu01</a></li>
+          <li><a href="#">Menu02</a></li>
+          <li id="li"><a href="#">Menu03  <span>▼</span></a>
             <ul>
               <li><a href="#">Sub-menu01</a></li>
               <li><a href="#">Sub-menu02</a></li>
               <li><a href="#">Sub-menu03</a></li>
             </ul>
           </li>
-          <li><a href="#">Menu02</a></li>
-          <li><a href="#">Menu03</a></li>
         </ul>
         </header>
 
