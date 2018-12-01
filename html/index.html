@@ -141,22 +141,52 @@
 
     <script>
 
-    // codemirror の実装
-    CodeMirror(document.getElementById("codeeditor"), {
-      mode: "javascript", lineNumbers: true, autoCloseBrackets: true,
-      
-      });
-
     elBtn = document.getElementsByName("btn");
     elForm = document.getElementById("form");
     elHome = document.getElementById("home");
+    elCodeeditor = document.getElementById("codeeditor");
 
     elBtn[0].addEventListener("click",printHome);
     elBtn[1].addEventListener("click",printForm);
 
+    // codemirror の実装
+    CodeMirror(elCodeeditor, {
+      mode: "javascript", lineNumbers: true, autoCloseBrackets: true,
+      
+      });
+
+    // ページから離れるときにアラートをだす
+    $(function() {
+      // フォームの入力欄が更新されたかどうかを表すフラグです。
+      var isChanged = false;
+
+      $(window).bind("beforeunload", function() {
+        console.log(isChanged);
+        if (isChanged) {
+          // isChangedフラグがtrueの場合、つまり入力内容が変更されていた
+          // 場合のみ文字列を返すようにします。
+          return "このページを離れようとしています。";
+        }
+      });
+
+      $("form input, form select, form textarea").change(function() {
+        // 入力内容が更新されている場合は、isChangedフラグをtrueにします。
+        isChanged = true;
+      });
+
+      $("button[type=submit]").click(function() {
+        // フォームをサブミットする前にフラグを落とします。
+        // ※ これをやらないと、サブミット時に確認メッセージが表示されてしまいます。
+        isChanged = false;
+
+        // 送信時にパスワードを要求する
+        var UserInput = prompt("パスワードを入力して下さい:","");
+
+      });
+    })      
 
     // #bodyをデフォルトで見えない状態にする
-    elForm.style.display="none";
+    elForm.style.display="none";    
 
     //　SUBMITボタンが押されたら#formを見える状態にし、#homeを見えない状態にする
     function printForm(){
@@ -176,7 +206,6 @@
         document.form.reset();
       }
     }
-
 
     </script>
 
