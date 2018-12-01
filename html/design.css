@@ -1,7 +1,7 @@
 
 
 body{
-background-image: url(pat2.jpg);
+background-image: url(image/pat2.jpg);
 }
 .mask{
   margin: 0px;
@@ -17,7 +17,7 @@ font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
 
 
 .mask h1{
-  background-image: url(pat3.jpg);
+  background-image: url(image/pat3.jpg);
   height: 100%;
   width: 100%;
   margin-top: 9px;
