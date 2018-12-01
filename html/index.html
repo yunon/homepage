@@ -45,7 +45,39 @@
         </header>
 
         <div class="body">
+
           <div id="form">
+          </div>
+
+          <div id="home">
+
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>#</th><th>タイトル</th><th>PATH</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td><a href="samplecode/HTML-SAMPLE1.html" class="square_btn" id="el1">HTMLサンプル</a></td><td id="ph1">samplecode/HTML-SAMPLE1.html</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td><a href="samplecode/janken/janken.html" class="square_btn" id="el2">JavaScriptでじゃんけん</a></td><td id="ph2">samplecode/janken/janken.html</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td><a href="samplecode/bootstrapTEST.html" class="square_btn" id="el3">Bootstrapテスト</a></td><td id="ph3">samplecode/bootstrapTEST.html</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td><a href="samplecode/mojikensaku/mojikensaku.html" class="square_btn" id="el4">JavaScriptで文字検索</a></td><td "ph4">samplecode/mojikensaku/mojikensaku.html</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -61,6 +93,7 @@
 
     elBtn = document.getElementsByName("btn");
     elForm = document.getElementById("form");
+    elHome = document.getElementById("home");
 
     elBtn[0].addEventListener("click",printHome);
     elBtn[1].addEventListener("click",printForm);
@@ -108,16 +141,18 @@
 
     // #bodyをデフォルトで見えない状態にする
     elForm.innerHTML = listCode;
-    elForm.style.visibility="hidden";
+    elForm.style.display="none";
 
-    //　SUBMITボタンが押されたら#formを見える状態にする
+    //　SUBMITボタンが押されたら#formを見える状態にし、#homeを見えない状態にする
     function printForm(){
-      elForm.style.visibility="visible";
+      elForm.style.display="block";
+      elHome.style.display="none";
     }
 
-    // HOMEボタンが押されたら#formを見えない状態にする
+    // HOMEボタンが押されたら#formを見えない状態にし、#homeを見える状態にする
     function printHome(){
-      elForm.style.visibility="hidden";
+      elForm.style.display="none";
+      elHome.style.display="block";
     }
 
     // リセットボタンが押されたらアラートで確認する
