@@ -132,3 +132,10 @@ ul{
   background: #67c5ff;
   color: white;
 }
+
+/* codemirror */
+.CodeMirror {
+  font-family: Monaco, 'Andale Mono', 'Lucida Console', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
+  font-size: 10pt;
+  height: 100%;
+}
