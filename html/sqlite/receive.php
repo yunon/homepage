@@ -28,8 +28,6 @@
             $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
             $pdo = new PDO('sqlite:sourcedata.sqlite','' ,'' ,$options);
 
-            // $result = $pdo->query("select * from sourcedata;");
-
 
             // ---  重複しない10桁のランダムな英数字を作成 ---------------
 
@@ -40,6 +38,7 @@
               $str = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPUQRSTUVWXYZ";
               $str_r = substr(str_shuffle($str), 0, 10);
               
+              // idが一致するレコードの数を出力するSQL文
               $sql1 = "SELECT COUNT(*) AS 'count' FROM sourcedata WHERE id = '".$str_r."';";
 
               $result1 = $pdo->query($sql1);  
@@ -71,7 +70,7 @@
 
             echo "sucessfull!! <br>";
             echo "タイトル : ", $title, "<br>";
-            echo "ファイル名 : ", $str_r, "<br>";
+            //echo "ファイル名 : ", $str_r, "<br>";
 
           } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
