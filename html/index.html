@@ -20,7 +20,7 @@
     <script src="codemirror/addon/edit/closebrackets.js"></script>
 
   </head>
-  <body onload="ajax()">
+  <body>
 
     <!-- タイトル -->
     <div class="mask">
@@ -37,9 +37,9 @@
         <ul>
           <div class="row">
 
-            <li class="col-sm-4" name="btn"><a href="#">HOME</a></li>
-            <li class="col-sm-4" name="btn"><a href="#">SUBMIT</a></li>
-            <li class="col-sm-4" name="btn"><a href="#">MENU  <span>▼</span></a>
+            <li class="col-sm-4" id="btnHOME"><a href="#">HOME</a></li>
+            <li class="col-sm-4" id="btnFORM"><a href="#">FORM</a></li>
+            <li class="col-sm-4" id="btnMENU"><a href="#">MENU  <span>▼</span></a>
               <ul>
                 <li><a href="#">Sub-menu01</a></li>
                 <li><a href="#">Sub-menu02</a></li>
@@ -137,7 +137,7 @@
 
             <!-- テスト　-->
 
-            <button id="ajax" onclick="ajax()">ajax</button>
+            <button id="ajax">ajax</button>
           </div>
         </div>
 
@@ -147,37 +147,49 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-    <!-- これがないとajaxの関数が使えないっぽい　-->
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+
+    <!-- これがないとajaxの関数が使えないっぽい　
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+    -->
     <script>
     
-
-    elBtn = document.getElementsByName("btn");
-    elFormBody = document.getElementById("formbody");
-    elHome = document.getElementById("home");
-    //elForm = document.getElementById("form1");
-    elCodeeditor = document.getElementById("codeeditor");
-    
-    
-    
-
-    elBtn[0].addEventListener("click",printHome);
-    elBtn[1].addEventListener("click",printForm);
-
-    // codemirror の実装   ※textareaの場合fromTextAreaをつけないといけない
-    var editor = CodeMirror.fromTextArea(elCodeeditor, {
-      mode: "javascript", lineNumbers: true, autoCloseBrackets: true,  
-    });
-
-
-    // ページから離れるときにアラートをだす
     $(function() {
+
+      // receive_jsからJSONを取得
+      getJSON();
+      $("#ajax").on("click", getJSON);
+
+      // #bodyをデフォルトで見えない状態にする
+      $("#formbody").hide();    
+      
+      // HOMEボタンが押されたら#formを見えない状態にし、#homeを見える状態にする
+      $("#btnHOME").on("click", function(){
+        $("#formbody").hide();
+        $("#home").show();
+      });
+
+      //　FORMボタンが押されたら#formを見える状態にし、#homeを見えない状態にする
+      $("#btnFORM").on("click", function(){
+        $("#home").hide();
+        $("#formbody").show();
+      })
+
+      /*
+      // codemirror の実装   ※textareaの場合fromTextAreaをつけないといけない
+      var editor = CodeMirror.fromTextArea(document.getElementById("#codeeditor"), {
+        mode: "javascript", lineNumbers: true, autoCloseBrackets: true,  
+      });
+      */
+      
       // フォームの入力欄が更新されたかどうかを表すフラグです。
       var isChanged = false;
 
+      // ページから離れるときにアラートをだす
       $(window).bind("beforeunload", function() {
         console.log(isChanged);
         if (isChanged) {
@@ -201,40 +213,37 @@
         var UserInput = prompt("パスワードを入力して下さい:","");
 
       });
+
+      
+        
+
+ 
+
+
+      // リセットボタンが押されたらアラートで確認する
+      function Confirm(){
+        if(confirm("本当に書き込み内容をリセットしますか？")){
+          document.form.reset();
+        }
+      }
+
+      // $.getJSONでURLにPHPファイルを指定してJSONを取得
+      function getJSON(){
+        $.getJSON("sqlite/receive_js.php", function(data){
+          console.log(data);
+        });
+      }          
     })      
 
-    // #bodyをデフォルトで見えない状態にする
-    elFormBody.style.display="none";    
-
-    //　SUBMITボタンが押されたら#formを見える状態にし、#homeを見えない状態にする
-    function printForm(){
-      elFormBody.style.display="block";
-      elHome.style.display="none";
-    }
-
-    // HOMEボタンが押されたら#formを見えない状態にし、#homeを見える状態にする
-    function printHome(){
-      elFormBody.style.display="none";
-      elHome.style.display="block";
-    }
-
-    // リセットボタンが押されたらアラートで確認する
-    function Confirm(){
-      if(confirm("本当に書き込み内容をリセットしますか？")){
-        document.form.reset();
-      }
-    }
-
     // Ajax通信をする
+    // Ajaxを使う必要もなかった。。。
+    /*
     function ajax(){
 
       $.ajax({
           url:'sqlite/receive_js.php',
           type:'POST',
-          data:{
-              'userid':"unk",
-              'passward':"mnk"
-          }
+        
        })
        // Ajaxリクエストが成功した時発動
        .done( (data) => {
@@ -251,6 +260,7 @@
 
         });
     }
+    */
 
     </script>
 
