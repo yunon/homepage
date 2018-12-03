@@ -54,7 +54,7 @@
                                 <p><input type="text" name="title" required>
                                 <p>ソースコード</p>
                                 <p class="p"><textarea id="codeeditor" name="sourcecode"></textarea></p>
-                                <p><button type="submit" class="btn btn-primary">送信する</button><button type="reset" class="btn btn-primary" id="reset" onclick="return confirm('本当に書き込み内容をリセットしますか？')">リセットする</button></p>
+                                <p><button type="submit" class="btn btn-primary" id="submit">送信する</button><button type="reset" class="btn btn-primary" id="reset" onclick="return confirm('本当に書き込み内容をリセットしますか？')">リセットする</button></p>
                               </fieldset>
                             </form>
                           </div>
@@ -88,6 +88,9 @@
     <script>
     
     $(function() {
+
+      // 送信無効化
+      $("#submit").prop("disabled", "true");
 
       // receive_jsからJSONを取得
       $.getJSON("sqlite/receive_js.php", function(data){
