@@ -98,7 +98,7 @@
                         <p><input type="text" name="title" required>
                         <p>ソースコード</p>
                         <p class="p"><textarea id="codeeditor" name="sourcecode"></textarea></p>
-                        <p><button type="submit" class="btn btn-primary">送信する</button><button type="button" class="btn btn-primary" onclick="Confirm()">リセットする</button></p>
+                        <p><button type="submit" class="btn btn-primary">送信する</button><button type="button" class="btn btn-primary" id="reset">リセットする</button></p>
                       </fieldset>
                     </form>
                   </div>
@@ -177,14 +177,12 @@
       $("#btnFORM").on("click", function(){
         $("#home").hide();
         $("#formbody").show();
-      })
-
-      /*
-      // codemirror の実装   ※textareaの場合fromTextAreaをつけないといけない
-      var editor = CodeMirror.fromTextArea(document.getElementById("#codeeditor"), {
-        mode: "javascript", lineNumbers: true, autoCloseBrackets: true,  
       });
-      */
+     
+      // codemirror の実装   ※textareaの場合fromTextAreaをつけないといけない
+      var editor = CodeMirror.fromTextArea(document.getElementById("codeeditor"), {
+        mode: "javascript", lineNumbers: true, autoCloseBrackets: true,  
+      }); 
       
       // フォームの入力欄が更新されたかどうかを表すフラグです。
       var isChanged = false;
@@ -214,18 +212,14 @@
 
       });
 
-      
-        
-
- 
-
-
-      // リセットボタンが押されたらアラートで確認する
-      function Confirm(){
+      /*
+      // リセットボタンが押されたらアラートで確認す
+      $("#reset").on("click", function(){
         if(confirm("本当に書き込み内容をリセットしますか？")){
-          document.form.reset();
+          $("form input").reset();
         }
-      }
+      });
+      */
 
       // $.getJSONでURLにPHPファイルを指定してJSONを取得
       function getJSON(){
@@ -233,7 +227,7 @@
           console.log(data);
         });
       }          
-    })      
+    });      
 
     // Ajax通信をする
     // Ajaxを使う必要もなかった。。。
