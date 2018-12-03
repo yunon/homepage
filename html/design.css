@@ -1,141 +1,124 @@
 
-
-body{
-background-image: url(image/pat2.jpg);
-}
 .mask{
   margin: 0px;
   padding: 0px;
 }
 h1 {
 padding: 0.2em 0;/*上下の余白*/
-border-top: solid 3px #364e96;/*上線*/
-border-bottom: solid 3px #364e96;/*下線*/
+border-top: solid 3px #474655;/*上線*/
+border-bottom: solid 3px #474655;/*下線*/
 margin: 0;
 font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
 }
-
-
-.mask h1{
+.mask h1{ 
   background-image: url(image/pat3.jpg);
   height: 100%;
   width: 100%;
   margin-top: 9px;
-  color: #364e96;
+  color: #474655;
   letter-spacing: 0.6em;
   text-align: center;
   font-size: 50px;
   font-weight: bold;
 }
 
-.col-sm-4 a{
-  color: #fff;
-  text-decoration: none;
-}
-#btnMENU ul li a:hover{
-  background-color: #ddd;
-  text-decoration: none;
-}
-
-/*------------------------- Menu ----------------------------------*/
-header{
-  margin-bottom: 1.5em;
-  position: relative;
-  width: 100%;
-  background-color: #364e96;
-}
-ul > .row > li{
-  /*display: inline-block;*/
-}
-ul > .row > li > a{
-  padding: 10px 20px;
-  display: block;
-  font-size: 1.1em;
-  text-transform: uppercase;
-  letter-spacing: .2em;
-}
-ul > .row > li > span{
-  margin-left: 1.2em;
-}
-ul > .row > li:hover > a{
-  background-color: #efefef;
-  color: #444;
-}
-
-/* Submenu */
-
-ul .row li ul{
-  position: absolute;
-  right: 0;
-  left: 0;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-ul .row li ul li{
-  display: block;
-  background-color: #efefef;
-}
-ul .row li ul li a{
-  background-color: #efefef;
-  color: #444;
-  padding: 10px 20px;
-  display: block;
-  font-size: 1.1em;
-  text-transform: uppercase;
-  letter-spacing: .2em;
-}
-/*
-ul .row li ul li a:hover{
-  background-color: #ddd;
-}*/
-
-ul{
-  padding-left: 0;
-}
-
-/*	Sample01
-------------------------------------------*/
-
-.sample01 ul li ul{
-  display: none;
-}
-.sample01 ul li:hover ul{
-  display: block;
-}
-
 /*------------------------- Body ----------------------------------*/
 
+body{
+  background-color: rgb(238, 238, 238);
+  }
 .body{
-  background-color: rgba(255, 255, 255, 0.5);
-  height: 1000px;
+  background-color: rgb(255, 255, 255);
   margin-bottom: 40px;
 }
 
-/* 表のボタン　*/
-.square_btn {
-  display: inline-block;
+/* menu bar */
+#menu ul{ 
+  margin: 0; 
+  padding: 0; 
+  list-style-type: none; 
+  }
+  #menu li{ 
+  display: inline; 
+  padding: 0px; 
+  margin: 0; 
+  }
+  #menu li a{
+  display: block; 
+  border-left: 8px solid #474655;
+  border-top: 1px solid #474655;
+  border-bottom: 1px solid #474655; 
+  background-color: rgb(255, 255, 255);
+  padding: 15px 10px;
   text-decoration: none;
-  padding: 0.3em 1em;
-  color: #6b6cff;
-  border: solid 2px #67c5ff;
-  border-radius: 3px;
-  transition: .4s;
+  color: #333;
+  width: 150px; 
+  margin: 1px 0px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: bold; 
+  font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
+  }
+  #menu li a:hover{
+  border-left: 8px solid #ffffff;
+  border-top: 1px solid #474655;
+  border-bottom: 1px solid #474655;
+  background-color: #d7dde9;
+  }
+
+  /* フォームのスタイル */     
+  button{
+    margin-left: 15px;
+  }
+  form{
+    border: solid;
+    border-color: #6e6e6e;
+    margin-bottom: 25px;
+    padding: 10px;
+  }
+  p input{
   width: 100%;
-  height: 100%;
-  text-align: center;
-  font-size: 20px;
-  background: rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.2em;
-}
+  }
+  #codeeditor{
+    height: 80%;
+  }
+  .CodeMirror {
+    font-family: Monaco, 'Andale Mono', 'Lucida Console', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
+    font-size: 10pt;
+    height: 100%;
+  }
+  textarea{
+    height: 100%;
+  }
+  .p{
+    height: 80%;
+  }
 
-.square_btn:hover {
-  background: #67c5ff;
-  color: white;
-}
-
-/* codemirror */
+  /* codemirror */
 .CodeMirror {
-  font-family: Monaco, 'Andale Mono', 'Lucida Console', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
-  font-size: 10pt;
+  font-family: "Ubuntu Mono";
+  line-height: 1.2em;
   height: 100%;
+}
+
+/* ホームコンテンツのスタイル */
+#contents{
+  border-top: solid;
+  border-color: #a3a3a3;
+  display: flex;
+  padding: 10px;                  
+}
+#icon{
+  margin-right: 4px;
+}
+#icon a img{
+  width:40px;
+  height: 40px;
+  margin: 5px;
+}
+#href a{
+  color: black;
+}
+#time{             
+  margin-left: 8px;
 }
