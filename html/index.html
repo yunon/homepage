@@ -98,7 +98,7 @@
                         <p><input type="text" name="title" required>
                         <p>ソースコード</p>
                         <p class="p"><textarea id="codeeditor" name="sourcecode"></textarea></p>
-                        <p><button type="submit" class="btn btn-primary">送信する</button><button type="button" class="btn btn-primary" id="reset">リセットする</button></p>
+                        <p><button type="submit" class="btn btn-primary">送信する</button><button type="reset" class="btn btn-primary" id="reset" onclick="return confirm('本当に書き込み内容をリセットしますか？')">リセットする</button></p>
                       </fieldset>
                     </form>
                   </div>
@@ -161,8 +161,25 @@
     $(function() {
 
       // receive_jsからJSONを取得
-      getJSON();
-      $("#ajax").on("click", getJSON);
+      arr = getJSON();
+      // test
+      $("#ajax").on("click", function(){
+
+        $.getJSON("sqlite/receive_js.php", function(data){
+
+          console.log(data[0]["title"]);
+
+          for(var i in data){
+            console.log(data[i]);
+          }
+          /*
+          $each(data, function(i, value){
+            console.log(value["id"]);
+          })
+          */
+          
+        });
+      });
 
       // #bodyをデフォルトで見えない状態にする
       $("#formbody").hide();    
@@ -188,20 +205,17 @@
       var isChanged = false;
 
       // ページから離れるときにアラートをだす
-      $(window).bind("beforeunload", function() {
-        console.log(isChanged);
+      $(window).on("beforeunload", function() {
         if (isChanged) {
           // isChangedフラグがtrueの場合、つまり入力内容が変更されていた
           // 場合のみ文字列を返すようにします。
           return "このページを離れようとしています。";
         }
       });
-
-      $("form input, form select, form textarea").change(function() {
+      $("form fieldset p input, form select, form textarea").change(function() {
         // 入力内容が更新されている場合は、isChangedフラグをtrueにします。
         isChanged = true;
       });
-
       $("button[type=submit]").click(function() {
         // フォームをサブミットする前にフラグを落とします。
         // ※ これをやらないと、サブミット時に確認メッセージが表示されてしまいます。
@@ -211,50 +225,17 @@
         var UserInput = prompt("パスワードを入力して下さい:","");
 
       });
-
-      /*
-      // リセットボタンが押されたらアラートで確認す
-      $("#reset").on("click", function(){
-        if(confirm("本当に書き込み内容をリセットしますか？")){
-          $("form input").reset();
-        }
-      });
-      */
-
+      var data;
       // $.getJSONでURLにPHPファイルを指定してJSONを取得
       function getJSON(){
         $.getJSON("sqlite/receive_js.php", function(data){
           console.log(data);
+          return data;
         });
-      }          
+      }
+
+
     });      
-
-    // Ajax通信をする
-    // Ajaxを使う必要もなかった。。。
-    /*
-    function ajax(){
-
-      $.ajax({
-          url:'sqlite/receive_js.php',
-          type:'POST',
-        
-       })
-       // Ajaxリクエストが成功した時発動
-       .done( (data) => {
-           $('.result').html(data);
-            console.log(data);
-        })
-        // Ajaxリクエストが失敗した時発動
-        .fail( (data) => {
-            $('.result').html(data);
-            console.log(data);
-        })
-        // Ajaxリクエストが成功・失敗どちらでも発動
-        .always( (data) => {
-
-        });
-    }
-    */
 
     </script>
 
