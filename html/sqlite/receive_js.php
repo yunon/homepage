@@ -20,7 +20,7 @@
         $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION );
         $pdo = new PDO("sqlite:sourcedata.sqlite", "", "", $options);
 
-        $sql1 = "SELECT * FROM sourcedata ORDER BY create_time DESC LIMIT 5;";
+        $sql1 = "SELECT * FROM sourcedata ORDER BY create_time DESC LIMIT 10;";
         // SQLの実行結果をfetchAll関数でresultに取り出す
         $result = $pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
         // jsonエンコード

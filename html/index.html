@@ -24,123 +24,136 @@
 
     <!-- タイトル -->
     <div class="mask">
-    <h1>自分用ソース置き場</h1>
+    <h1>ＴＥＳＴ</h1>
     </div>
 
     <div class="container">
 
-        <!-- タイトル -->
-
-
         <header class="sample01">
-        <!-- 選択バー -->
-        <ul>
-          <div class="row">
+            <!-- 選択バー -->
+            <ul>
+              <div class="row">
+    
+                <li class="col-sm-4" id="btnHOME"><a href="#">HOME</a></li>
+                <li class="col-sm-4" id="btnFORM"><a href="#">FORM</a></li>
+                <li class="col-sm-4" id="btnMENU"><a href="#">MENU  <span>▼</span></a>
+                  <ul>
+                    <li><a href="#">Sub-menu01</a></li>
+                    <li><a href="#">Sub-menu02</a></li>
+                    <li><a href="#">Sub-menu03</a></li>
+                  </ul>
+                </li>
+    
+              </div>
+            </ul>
+            </header>
 
-            <li class="col-sm-4" id="btnHOME"><a href="#">HOME</a></li>
-            <li class="col-sm-4" id="btnFORM"><a href="#">FORM</a></li>
-            <li class="col-sm-4" id="btnMENU"><a href="#">MENU  <span>▼</span></a>
-              <ul>
-                <li><a href="#">Sub-menu01</a></li>
-                <li><a href="#">Sub-menu02</a></li>
-                <li><a href="#">Sub-menu03</a></li>
-              </ul>
-            </li>
+
+        <div class="row">
+          
+          <div class="col-sm-2">
+
+
 
           </div>
-        </ul>
-        </header>
+          <div class="col-sm-8">
 
-        <div class="body">
+              <div class="body">
 
-          <div id="formbody" style="height: 100%">
-
-              <style>
-
-                  button{
-                    margin-left: 15px;
-                  }
-                  form{
-                    margin-top: 25px;
-                    margin-bottom: 25px;
-                    border: solid;
-                    border-color: #00bfff;
-                    padding: 20px;
-                    background: #b0e0e6;
-                  }
-                  p input{
-                  width: 100%;
-                  }
-
-                  #codeeditor{
-                    height: 80%;
-                  }
-                  .CodeMirror {
-                    font-family: Monaco, 'Andale Mono', 'Lucida Console', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
-                    font-size: 10pt;
-                    height: 100%;
-                  }
-                  textarea{
-                    height: 100%;
-                  }
-                  .p{
-                    height: 80%;
-                  }                  
-        
-                  </style>
-        
-                  <div style="height: 100%">
-                    <form action="sqlite/receive.php" method="post" name="form" id="form1" style="height: 100%">
-                      <fieldset style="height: 100%">
-                        <legend></legend>
-        
-                        <p>タイトル<p>
-                        <p><input type="text" name="title" required>
-                        <p>ソースコード</p>
-                        <p class="p"><textarea id="codeeditor" name="sourcecode"></textarea></p>
-                        <p><button type="submit" class="btn btn-primary">送信する</button><button type="reset" class="btn btn-primary" id="reset" onclick="return confirm('本当に書き込み内容をリセットしますか？')">リセットする</button></p>
-                      </fieldset>
-                    </form>
+                  <div id="formbody" style="height: 100%">
+      
+                      <style>
+      
+                          button{
+                            margin-left: 15px;
+                          }
+                          form{
+                            margin-top: 25px;
+                            margin-bottom: 25px;
+                            border: solid;
+                            border-color: #00bfff;
+                            padding: 20px;
+                            background: #b0e0e6;
+                          }
+                          p input{
+                          width: 100%;
+                          }
+      
+                          #codeeditor{
+                            height: 80%;
+                          }
+                          .CodeMirror {
+                            font-family: Monaco, 'Andale Mono', 'Lucida Console', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
+                            font-size: 10pt;
+                            height: 100%;
+                          }
+                          textarea{
+                            height: 100%;
+                          }
+                          .p{
+                            height: 80%;
+                          }                  
+                
+                          </style>
+                
+                          <div style="height: 100%">
+                            <form action="sqlite/receive.php" method="post" name="form" id="form1" style="height: 100%">
+                              <fieldset style="height: 100%">
+                                <legend></legend>
+                
+                                <p>タイトル<p>
+                                <p><input type="text" name="title" required>
+                                <p>ソースコード</p>
+                                <p class="p"><textarea id="codeeditor" name="sourcecode"></textarea></p>
+                                <p><button type="submit" class="btn btn-primary">送信する</button><button type="reset" class="btn btn-primary" id="reset" onclick="return confirm('本当に書き込み内容をリセットしますか？')">リセットする</button></p>
+                              </fieldset>
+                            </form>
+                          </div>
+      
                   </div>
+      
+      
+                  <style>
+                    #contents{
+                      border-top: solid;
+                      border-color: #a3a3a3;
+                      display: flex;
+                      padding: 10px;
+                      
+                    }
+                    #icon{
+                      margin-right: 4px;
+                    }
+                    #icon a img{
+                      width:40px;
+                      height: 40px;
+                      margin: 5px;
+                    }
+      
+                    #href a{
+                      color: black;
+                      font-weight: bold;
+      
+                    }
+      
+                    #time{             
+                      margin-left: 8px;
+                    }
+                  </style>
+      
+                  <div id="home">
+      
+      
+                    <!-- テスト　-->
+      
+                    <button id="ajax">ajax</button>
+                  </div>
+                </div>
 
           </div>
+          <div class="col-sm-2"></div>
 
-          <div id="home">
-
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>#</th><th>タイトル</th><th>PATH</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td><a href="samplecode/HTML-SAMPLE1.html" class="square_btn" id="el1">HTMLサンプル</a></td><td id="ph1">samplecode/HTML-SAMPLE1.html</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td><a href="samplecode/janken/janken.html" class="square_btn" id="el2">JavaScriptでじゃんけん</a></td><td id="ph2">samplecode/janken/janken.html</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td><a href="samplecode/bootstrapTEST.html" class="square_btn" id="el3">Bootstrapテスト</a></td><td id="ph3">samplecode/bootstrapTEST.html</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td><a href="samplecode/mojikensaku/mojikensaku.html" class="square_btn" id="el4">JavaScriptで文字検索</a></td><td "ph4">samplecode/mojikensaku/mojikensaku.html</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- テスト　-->
-
-            <button id="ajax">ajax</button>
-          </div>
         </div>
-
     </div>
 
     <!-- Optional JavaScript -->
@@ -161,7 +174,34 @@
     $(function() {
 
       // receive_jsからJSONを取得
-      arr = getJSON();
+      $.getJSON("sqlite/receive_js.php", function(data){
+
+        var htmlcode = (function() {/*
+
+            <div id="contents">
+              <div id="icon">
+                <a><img src="image/user.jpg"></a>
+                
+              </div>
+              <div id="href">
+                <a id="title" href="sourcecode/:id.html">:title</a>
+                <div id="time">:time</div>
+              </div>
+            </div>
+
+        */}).toString().match(/\/\*([^]*)\*\//)[1];
+
+        for(i in data){
+
+          var rp_htmlcode = htmlcode
+          .replace(":title", data[i]["title"])
+          .replace(":id", data[i]["id"])
+          .replace(":time", data[i]["create_time"]);
+
+          $("#home").append(rp_htmlcode);
+        }
+
+      });
       // test
       $("#ajax").on("click", function(){
 
@@ -172,11 +212,6 @@
           for(var i in data){
             console.log(data[i]);
           }
-          /*
-          $each(data, function(i, value){
-            console.log(value["id"]);
-          })
-          */
           
         });
       });
@@ -225,15 +260,6 @@
         var UserInput = prompt("パスワードを入力して下さい:","");
 
       });
-      var data;
-      // $.getJSONでURLにPHPファイルを指定してJSONを取得
-      function getJSON(){
-        $.getJSON("sqlite/receive_js.php", function(data){
-          console.log(data);
-          return data;
-        });
-      }
-
 
     });      
 

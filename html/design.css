@@ -28,13 +28,12 @@ font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
   font-weight: bold;
 }
 
-a{
+.col-sm-4 a{
   color: #fff;
   text-decoration: none;
 }
-a:hover{
-  color: #444;
-  background-color: #efefef;
+#btnMENU ul li a:hover{
+  background-color: #ddd;
   text-decoration: none;
 }
 
@@ -46,7 +45,7 @@ header{
   background-color: #364e96;
 }
 ul > .row > li{
-  display: inline-block;
+  /*display: inline-block;*/
 }
 ul > .row > li > a{
   padding: 10px 20px;
@@ -85,9 +84,10 @@ ul .row li ul li a{
   text-transform: uppercase;
   letter-spacing: .2em;
 }
+/*
 ul .row li ul li a:hover{
   background-color: #ddd;
-}
+}*/
 
 ul{
   padding-left: 0;

@@ -62,11 +62,10 @@
             $dir = "../sourcecode/";
             file_put_contents($dir.$str_r.".html" ,$sourcecode);
 
-            /*
-              //元のページにリダイレクト？
-              header("Location: http:");
+  
+            header("Location: ../index.html");
 
-            */
+            
 
             echo "sucessfull!! <br>";
             echo "タイトル : ", $title, "<br>";
