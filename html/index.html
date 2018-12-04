@@ -56,6 +56,18 @@
                   </div>
 
                   <div id="home">
+
+                    <div id="search">
+                      <input type="text" class="form-horizontal"><button>検索</button>
+                    </div>
+
+                    <div id="filter">
+                      <select class="selectpicker">
+                        <option value="new">新しい順</option>
+                        <option value="old">古い順</option>
+                        <option value="name">名前順</option>
+                      </select>
+                    </div>
       
                     <div id="add">
 
@@ -88,14 +100,35 @@
     
     <script>
 
-    num=0;
+    var num = 0;
+    var filter = "new";
+    var word = null;
 
 
     $(function() {
 
+
       post();
       // 送信無効化
-      $("#submit").prop("disabled", "true");
+      //$("#submit").prop("disabled", "true");
+
+      // テキストボックスに入力されるたびに値を入れる
+      $("#search").change(function(){
+        word = $("#search input").val();
+      })
+      // 検索ボタンが押されたら再読み込み
+      $("#search button").on("click",function(){
+        num = 0;
+        $("#add").empty();        
+        post();
+      })
+      // 並び替えボタンが押されたら再読み込み
+      $("#filter").change(function(){
+        num = 0;
+        $("#add").empty();
+        filter = $("select").val();
+        post();
+      })
 
       // moreボタンを押すとさらに表示
       $("#more").on("click", function(){     
@@ -155,7 +188,8 @@
           type:'POST',
           data:{
               'num': num,
-              'passward':"mnk"
+              'filter': filter,
+              'word': word
           }
        })
        // Ajaxリクエストが成功した時発動
