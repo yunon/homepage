@@ -18,11 +18,21 @@
     try{
 
         $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION );
+
         $pdo = new PDO("sqlite:sourcedata.sqlite", "", "", $options);
 
+        $Pdo= $pdo->prepare("SELECT * FROM sourcedata ORDER BY create_time DESC LIMIT :num");
+        $Pdo->bindParam(":num", intval($_POST["num_data"]), PDO::PARAM_STR);
+
+        $result = $Pdo->execute()->fetchALL(PDO::FETCH_ASSOC);
+                    
+            
+
+        /*
         $sql1 = "SELECT * FROM sourcedata ORDER BY create_time DESC LIMIT 10;";
         // SQLの実行結果をfetchAll関数でresultに取り出す
         $result = $pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
+        */
         // jsonエンコード
         echo json_encode($result);
 
