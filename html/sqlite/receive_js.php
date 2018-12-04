@@ -23,7 +23,7 @@
 
         $pdo = new PDO("sqlite:sourcedata.sqlite", "", "", $options);
 
-        $result = $pdo->query("SELECT * FROM sourcedata WHERE title LIKE '%".$word."%' ORDER BY ".$colname." ".$filter." LIMIT ".$num.", 5;")->fetchAll(PDO::FETCH_ASSOC);
+        $result = $pdo->query("SELECT id,title,strftime('%s', datetime(CURRENT_TIMESTAMP))- strftime('%s', create_time) AS 'time' FROM sourcedata WHERE title LIKE '%".$word."%' ORDER BY ".$colname." ".$filter." LIMIT ".$num.", 5;")->fetchAll(PDO::FETCH_ASSOC);
     
         // jsonエンコード
         echo json_encode($result);

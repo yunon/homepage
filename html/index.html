@@ -212,11 +212,18 @@
           */}).toString().match(/\/\*([^]*)\*\//)[1];
 
           for(i in data){
+            let time = data[i]["time"];
+            if(time<60)time+="秒前";
+            else if(time<3600)time=Math.floor(time/60)+"分前";
+            else if(time<86400)time=Math.floor(time/3600)+"時間前";
+            else if(time<2628003)time=Math.floor(time/86400)+"日前";
+            else if(time<31557600)time=Math.floor(time/2628003)+"ヶ月前";
+            else time=Math.floor(time/31557600)+"年前";
 
             var rp_htmlcode = htmlcode
             .replace(":title", data[i]["title"])
             .replace(":id", data[i]["id"])
-            .replace(":time", data[i]["create_time"]);
+            .replace(":time", time);
             $("#add").append(rp_htmlcode);
           }
         })
