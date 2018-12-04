@@ -4,7 +4,7 @@
   padding: 0px;
 }
 h1 {
-padding: 0.2em 0;/*上下の余白*/
+padding: 0.1em 0;/*上下の余白*/
 border-top: solid 3px #474655;/*上線*/
 border-bottom: solid 3px #474655;/*下線*/
 margin: 0;
@@ -14,7 +14,7 @@ font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
   background-image: url(image/pat3.jpg);
   height: 100%;
   width: 100%;
-  margin-top: 9px;
+  margin-top: 0;
   color: #474655;
   letter-spacing: 0.6em;
   text-align: center;
@@ -36,8 +36,11 @@ body{
 #menu ul{ 
   margin: 0; 
   padding: 0; 
-  list-style-type: none; 
+  list-style-type: none;
+  position: fixed;
+
   }
+
   #menu li{ 
   display: inline; 
   padding: 0px; 
@@ -80,7 +83,7 @@ body{
   width: 100%;
   }
   #codeeditor{
-    height: 80%;
+    height: 70%;
   }
   .CodeMirror {
     font-family: Monaco, 'Andale Mono', 'Lucida Console', 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
@@ -91,7 +94,7 @@ body{
     height: 100%;
   }
   .p{
-    height: 80%;
+    height: 74%;
   }
 
   /* codemirror */

@@ -44,11 +44,11 @@
                               <fieldset style="height: 100%">
                                 <legend></legend>
                 
-                                <p>タイトル<p>
-                                <p><input type="text" name="title" required>
+                                <p>タイトル <input type="text" name="title" required><p>
+                                <p>タグ <input type="text" name="tag"></p>
                                 <p>ソースコード</p>
                                 <p class="p"><textarea id="codeeditor" name="sourcecode"></textarea></p>
-                                <p><button type="submit" class="btn btn-primary" id="submit">送信する</button><button type="reset" class="btn btn-primary" id="reset" onclick="return confirm('本当に書き込み内容をリセットしますか？')">リセットする</button></p>
+                                <button type="submit" class="btn btn-primary" id="submit">送信する</button><button type="reset" class="btn btn-primary" id="reset" onclick="return confirm('本当に書き込み内容をリセットしますか？')">リセットする</button>
                               </fieldset>
                             </form>
                           </div>
@@ -107,6 +107,7 @@
 
     $(function() {
 
+    
 
       post();
       // 送信無効化
