@@ -53,7 +53,7 @@
       #href div{
         display: flex;
       }
-      #tag {
+      .tag {
         padding-left: 9px;
         font-size: 0.93em;
       }
@@ -152,6 +152,15 @@
       post();
       // 送信無効化
       //$("#submit").prop("disabled", "true");
+
+      $(".tag").click(function(){
+        searchtype = 1;
+        num = 0;
+        $("#add").empty();
+        post();
+        word = "";
+      })
+      
 
       // テキストボックスに入力されるたびに値を入れる
       $("#search").change(function(){
@@ -255,13 +264,12 @@
                     :tag <div id="time">:time</div>
                   </div>
 
-
                 </div>
               </div>
 
           */}).toString().match(/\/\*([^]*)\*\//)[1];
 
-          var tag = "<a id='tag' href=''>:tag</a>";
+          var tag = "<a class='tag' href='#' onclick=\"word=this.innerHTML;$('#search input').val(word);searchtype=1;num = 0;$('#add').empty();post()\">:tag</a>";
          
 
           for(i in data){
@@ -276,10 +284,11 @@
 
             if(data[i]["tagname"] != null){
               var array = data[i]["tagname"].split(",");
+              for(j in array){
+                tagRes += tag.replace(":tag", array[j]);
+              }
             }
-            for(j in array){
-              tagRes += tag.replace(":tag", array[j]);
-            }
+
             var rp_htmlcode = htmlcode
             .replace(":title", data[i]["title"])
             .replace(":id", data[i]["id"])
@@ -296,6 +305,7 @@
         // Ajaxリクエストが成功・失敗どちらでも発動
         .always( (data) => {
          });
+
     }
     </script>
 
