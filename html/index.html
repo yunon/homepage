@@ -19,6 +19,45 @@
     <script src="codemirror/addon/edit/closebrackets.js"></script>
 
     <link rel="stylesheet" type="text/css" href="design.css">
+    <style>
+      /* ホームコンテンツのスタイル */
+      #contents{
+        border-top: solid;
+        border-color: #a3a3a3;
+        display: flex;
+        padding: 8px;    
+        position: relative;              
+      }
+      #icon{
+        margin-right: 4px;
+      }
+      #icon a img{
+        width:40px;
+        height: 40px;
+        margin: 5px;
+      }
+      #href a{
+        color: black;
+      }
+      #href a span{
+        font-weight: bold;
+        font-size: 1.1em;
+      }
+      #time{             
+        margin-right: 8px;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+
+      }
+      #href div{
+        display: flex;
+      }
+      #tag {
+        padding-left: 9px;
+        font-size: 0.93em;
+      }
+    </style>
     
 
   </head>
@@ -58,7 +97,7 @@
                   <div id="home">
 
                     <div id="search">
-                      <input type="text" class="form-horizontal"><button>検索</button>
+                      <input type="text" class="form-horizontal"><button>文字検索</button><button>タグ検索</button>
                     </div>
 
                     <div id="filter">
@@ -103,6 +142,7 @@
     var num = 0;
     var filter = "new";
     var word = null;
+    var searchtype = 0;
 
 
     $(function() {
@@ -119,6 +159,10 @@
       })
       // 検索ボタンが押されたら再読み込み
       $("#search button").on("click",function(){
+
+        if($(this).html() == "タグ検索"){
+          searchtype = 1;
+        }else searchtype = 0;
         num = 0;
         $("#add").empty();        
         post();
@@ -132,8 +176,8 @@
       })
 
       // moreボタンを押すとさらに表示
-      $("#more").on("click", function(){     
-        num += 5;
+      $("#more").on("click", function(){
+        num += 10;
         post();
       })
 
@@ -190,7 +234,8 @@
           data:{
               'num': num,
               'filter': filter,
-              'word': word
+              'word': word,
+              'searchtype': searchtype
           }
        })
        // Ajaxリクエストが成功した時発動
@@ -205,14 +250,22 @@
                   
                 </div>
                 <div id="href">
-                  <a id="title" href="sourcecode/:id.html">:title</a>
-                  <div id="time">:time</div>
+                  <a id="title" href="sourcecode/:id.html"><span>:title</span></a>
+                  <div>
+                    :tag <div id="time">:time</div>
+                  </div>
+
+
                 </div>
               </div>
 
           */}).toString().match(/\/\*([^]*)\*\//)[1];
 
+          var tag = "<a id='tag' href=''>:tag</a>";
+         
+
           for(i in data){
+            var tagRes = "";
             let time = data[i]["time"];
             if(time<60)time+="秒前";
             else if(time<3600)time=Math.floor(time/60)+"分前";
@@ -221,10 +274,17 @@
             else if(time<31557600)time=Math.floor(time/2628003)+"ヶ月前";
             else time=Math.floor(time/31557600)+"年前";
 
+            if(data[i]["tagname"] != null){
+              var array = data[i]["tagname"].split(",");
+            }
+            for(j in array){
+              tagRes += tag.replace(":tag", array[j]);
+            }
             var rp_htmlcode = htmlcode
             .replace(":title", data[i]["title"])
             .replace(":id", data[i]["id"])
-            .replace(":time", time);
+            .replace(":time", time)
+            .replace(":tag", tagRes);
             $("#add").append(rp_htmlcode);
           }
         })

@@ -122,6 +122,9 @@ body{
 #href a{
   color: black;
 }
+#href a span{
+  font-weight: bold;
+}
 #time{             
   margin-left: 8px;
 }
