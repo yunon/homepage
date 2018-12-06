@@ -97,7 +97,11 @@
                   <div id="home">
 
                     <div id="search">
-                      <input type="text" class="form-horizontal"><button>文字検索</button><button>タグ検索</button>
+                      <input type="text" class="form-horizontal"><button>検索</button>
+                      <select>
+                        <option value=0 id="op0">文字検索</option>
+                        <option value=1 id="op1">タグ検索</option>
+                      </select>
                     </div>
 
                     <div id="filter">
@@ -113,9 +117,7 @@
                     </div>
                     <a id="more">more</a>
                   </div>
-
- 
-                  
+  
                 </div>
           </div>
 
@@ -151,25 +153,25 @@
       // 送信無効化
       //$("#submit").prop("disabled", "true");
 
+      // タグがクリックされたら再読み込み
       $(".tag").click(function(){
         searchtype = 1;
         num = 0;
         $("#add").empty();
         post();
-        word = "";
       })
-      
 
-      // テキストボックスに入力されるたびに値を入れる
-      $("#search").change(function(){
-        word = $("#search input").val();
+      // ENTERキーが押されたとき
+      $("#search").keypress(function(e){
+        if(e.which == 13){
+          $("#search button").click();
+        }
       })
+
       // 検索ボタンが押されたら再読み込み
       $("#search button").on("click",function(){
-
-        if($(this).html() == "タグ検索"){
-          searchtype = 1;
-        }else searchtype = 0;
+        searchtype = $("#search select").val();
+        word = $("#search input").val();
         num = 0;
         $("#add").empty();        
         post();
