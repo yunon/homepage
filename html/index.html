@@ -21,11 +21,14 @@
     <link rel="stylesheet" type="text/css" href="design.css">
     <style>
       /* ホームコンテンツのスタイル */
+      #add{
+        background-color:#FFF;
+      }
       #contents{
         border-top: solid;
         border-color: #a3a3a3;
         display: flex;
-        padding: 8px;    
+        padding: 8px;   
         position: relative;              
       }
       #icon{
@@ -53,10 +56,7 @@
       #href div{
         display: flex;
       }
-      .tag {
-        padding-left: 9px;
-        font-size: 0.93em;
-      }
+
     </style>
     
 
@@ -146,8 +146,6 @@
 
 
     $(function() {
-
-    
 
       post();
       // 送信無効化
@@ -260,8 +258,8 @@
                 </div>
                 <div id="href">
                   <a id="title" href="sourcecode/:id.html"><span>:title</span></a>
-                  <div>
-                    :tag <div id="time">:time</div>
+                  <div id="href2">
+                    <ul>:tag </ul><div id="time">:time</div>
                   </div>
 
                 </div>
@@ -269,7 +267,7 @@
 
           */}).toString().match(/\/\*([^]*)\*\//)[1];
 
-          var tag = "<a class='tag' href='#' onclick=\"word=this.innerHTML;$('#search input').val(word);searchtype=1;num = 0;$('#add').empty();post()\">:tag</a>";
+          var tag = "<li><a class='tag' href='#' onclick=\"word=this.firstElementChild.innerHTML;$('#search input').val(word);searchtype=1;num = 0;$('#add').empty();post()\"><span>:tag</span></a></li>";
          
 
           for(i in data){
