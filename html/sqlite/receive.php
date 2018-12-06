@@ -27,8 +27,15 @@
     }
 
     // タグを分けて配列に保存
-    $arrTg= preg_split("/[\s,]+/", $_POST["tag"]);
+    $arrTg= preg_split("/[\s|\x{3000}]+/u", $_POST["tag"]);
+    // 配列の中の重複を排除する
+    $arrTg= array_unique($arrTg);
+    //配列の中の空要素を削除する
+    $arrTg = array_filter($arrTg, "strlen"); 
+    //添字を振り直す
+    $arrTg = array_values($arrTg);
 
+    // ---- タグをデータベースに登録する --------
     foreach($arrTg as $i){
       
       $sql1 = "SELECT COUNT(*) AS 'count' FROM tagdata WHERE tagname='".$i."';";
@@ -48,7 +55,7 @@
       $st->execute();
     }
     
-    // ---------- sqliteにデータを追加 -----------------
+    // ---------- idとtitleをデータベースに登録する -----------------
     
     $sql1 = "INSERT INTO sourcedata(id, title) VALUES(:id, :title);";
     $st = $pdo->prepare($sql1);
@@ -60,6 +67,7 @@
     $dir = "../sourcecode/";
     file_put_contents($dir.$str_r.".html" ,$sourcecode);
 
+    // リダイレクト
     header("Location: ../index.html");
 
   } catch (PDOException $e) {

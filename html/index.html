@@ -20,6 +20,7 @@
 
     <link rel="stylesheet" type="text/css" href="design.css">
     <style>
+
       /* ホームコンテンツのスタイル */
       #add{
         background-color:#FFF;
@@ -56,6 +57,56 @@
       #href div{
         display: flex;
       }
+      #href2 ul li a:hover{
+        text-decoration: none;
+      }
+      #more{
+        cursor: pointer;
+        color: gray;
+      }
+
+      /* 検索テキスト周り */
+      #form02{
+        background-color: #FFF;
+        width:270px;
+        height: 30px;
+        border: 2px grey solid;
+        padding: 0;
+        margin: 0;
+        border-radius: 10px;
+      }
+      #form02:hover{
+
+        background-color: #f7fff9
+
+      }
+      #form02 input{
+        vertical-align: top;
+        margin: 0px;
+        height: 100%;
+        box-sizing: border-box;
+        background-color: transparent;
+      }
+      #form02 input[type="text"]{
+        margin-left: 5px;
+        width:230px;
+        height: 25px;
+        border: none;
+        caret-color: #a3a3a3;
+      }
+      #form02 input:focus{
+        outline: none;
+      }
+      #form02 input[type="button"]{
+        width: 30px;
+        border: none;
+        background-image: url(image/images.png);
+        background-position: center;
+        background-size: auto 90%;
+        background-repeat: no-repeat;
+        cursor: pointer
+      }
+ 
 
     </style>
     
@@ -96,8 +147,8 @@
 
                   <div id="home">
 
-                    <div id="search">
-                      <input type="text" class="form-horizontal"><button>検索</button>
+                    <div id="search" style="display: flex">
+                      <form id="form02"><input type="text" class="form-horizontal" placeholder=" キーワードを入力"><input type="button"></form>
                       <select>
                         <option value=0 id="op0">文字検索</option>
                         <option value=1 id="op1">タグ検索</option>
@@ -115,7 +166,7 @@
                     <div id="add">
 
                     </div>
-                    <a id="more">more</a>
+                    <a id="more">もっと見る</a>
                   </div>
   
                 </div>
@@ -164,12 +215,12 @@
       // ENTERキーが押されたとき
       $("#search").keypress(function(e){
         if(e.which == 13){
-          $("#search button").click();
+          $("#search input[type='button']").click();
         }
       })
 
       // 検索ボタンが押されたら再読み込み
-      $("#search button").on("click",function(){
+      $("#form02 input[type='button']").on("click",function(){
         searchtype = $("#search select").val();
         word = $("#search input").val();
         num = 0;
@@ -180,7 +231,7 @@
       $("#filter").change(function(){
         num = 0;
         $("#add").empty();
-        filter = $("select").val();
+        filter = $("#filter select").val();
         post();
       })
 
@@ -269,11 +320,12 @@
 
           */}).toString().match(/\/\*([^]*)\*\//)[1];
 
-          var tag = "<li><a class='tag' href='#' onclick=\"word=this.firstElementChild.innerHTML;$('#search input').val(word);searchtype=1;num = 0;$('#add').empty();post()\"><span>:tag</span></a></li>";
+          var tag = "<li><a class='tag' href='#' onclick=\"word=this.firstElementChild.innerHTML;$('#search input[type=&quot;text&quot;]').val(word);searchtype=1;num = 0;$('#add').empty();post()\"><span>:tag</span></a></li>";
          
 
           for(i in data){
             var tagRes = "";
+            // 時間処理
             let time = data[i]["time"];
             if(time<60)time+="秒前";
             else if(time<3600)time=Math.floor(time/60)+"分前";
@@ -282,6 +334,7 @@
             else if(time<31557600)time=Math.floor(time/2628003)+"ヶ月前";
             else time=Math.floor(time/31557600)+"年前";
 
+            // タグ処理
             if(data[i]["tagname"] != null){
               var array = data[i]["tagname"].split(",");
               for(j in array){
@@ -289,6 +342,7 @@
               }
             }
 
+            // 文字変換
             var rp_htmlcode = htmlcode
             .replace(":title", data[i]["title"])
             .replace(":id", data[i]["id"])

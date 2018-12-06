@@ -72,7 +72,7 @@ body{
   button{
     margin-left: 15px;
   }
-  form{
+  #formbody div form{
     border: solid;
     border-color: #6e6e6e;
     margin-bottom: 25px;
