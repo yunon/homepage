@@ -136,7 +136,7 @@
                 
                                 <p>タイトル <input type="text" name="title" required><p>
                                 <p>タグ <input type="text" name="tag"></p>
-                                <p>ソースコード</p>
+                                <p>コンテンツ</p>
                                 <p class="p"><textarea id="codeeditor" name="sourcecode"></textarea></p>
                                 <button type="submit" class="btn btn-primary" id="submit">送信する</button><button type="reset" class="btn btn-primary" id="reset" onclick="return confirm('本当に書き込み内容をリセットしますか？')">リセットする</button>
                               </fieldset>
@@ -176,9 +176,9 @@
               <div id="menu">
                   <ul>
                     <li><a href="#" id="btnHOME">HOME</a></li>
-                    <li><a href="#" id="btnFORM">FORM</a></li>
-                    <li><a href="#">DIARY</a></li>
-                    <li><a href="#">BBS</a></li>
+                    <li><a href="#" id="btnFORM">POST</a></li>
+                    <li><a href="#">□□□□</a></li>
+                    <li><a href="#">□□□□</a></li>
                   </ul> 
               </div>
 
@@ -289,8 +289,8 @@
     function post(){
 
        $.ajax({
-          url:'sqlite/receive_js.php',
-          type:'POST',
+          url:'http://localhost:3000/sample/sqlite',
+          type:'GET',
           data:{
               'num': num,
               'filter': filter,

@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 
 var sample = require('./routes/sample');
 
+
 app.listen(3000);
 
 // publicディレクトリを公開
