@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+    <div id="tes"></div>
+    <script>
+        array = ['test', 'tes', 'test', 'tete', ' ', '', '    '];
+        array = array.filter(function(value, index, array){
+            return array.indexOf(value) === index;
+        }).filter(function(value){
+            return  (value != ' ' && value != '　' && value != '')
+        })
+        console.log(array);
+    </script>
+</body>
+</html>
