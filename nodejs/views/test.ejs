@@ -9,14 +9,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="http://localhost:3000/mybootstrap.css">
 
-    <title>MYWEBPAGE</title>
+    <title><%= title%></title>
 
-    <!-- codemirrorの読み込み -->
-    <script src="codemirror/lib/codemirror.js"></script>
-    <link rel="stylesheet" href="codemirror/lib/codemirror.css">
-    <link rel="stylesheet" href="codemirror/theme/3024-day.css">
-    <script src="codemirror/mode/javascript/javascript.js"></script>
-    <script src="codemirror/addon/edit/closebrackets.js"></script>
+    <link rel="shortcut icon" href="http://localhost:3000/image/red-maru.png">
 
     <link rel="stylesheet" type="text/css" href="http://localhost:3000/design.css">
     <style>
@@ -106,11 +101,26 @@
         background-repeat: no-repeat;
         cursor: pointer
       }
+
+      .body{
+        background-color: #FFFF;
+        line-height: 2em;
+        padding: 2em;
+        margin-top: 3em;
+        margin-bottom: 2em;
+      }
+      .body h1, .body h2, .body h3, .body h4{
+        padding-left: 0.2em;
+        margin-top: 2em;
+        margin-bottom: 1.15em;
+        border-bottom: solid;
+        border-top-color:rgb(165, 164, 164);
+        border-bottom-color: rgb(165, 164, 164);
+      }
  
 
     </style>
     
-
   </head>
   <body>
 
@@ -123,24 +133,12 @@
 
         <div class="row">
           
-          <div class="col-sm-9">
+          <div class="col-sm-12">
 
                 <div class="body">
-                    <%= test %>
+                    <%- test %>
                 </div>
-          </div>
-
-          <div class="col-sm-3">
-              <div id="menu">
-                  <ul>
-                    <li><a href="#" id="btnHOME">HOME</a></li>
-                    <li><a href="#" id="btnFORM">POST</a></li>
-                    <li><a href="#">□□□□</a></li>
-                    <li><a href="#">□□□□</a></li>
-                  </ul> 
-              </div>
-
-          </div>          
+          </div>   
 
     </div>
 </body>

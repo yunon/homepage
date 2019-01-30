@@ -188,7 +188,7 @@ router.post('/register',function(req, res, next){
     function(next){
 
       // ファイル作成
-      fs.writeFile(`./public/sourcecode/${strRandom}`,sourcecode,function(err){return});
+      fs.writeFile(`./public/sourcecode/${strRandom}.md`,sourcecode,function(err){return});
       // データベースクローズ
       db.close();
       // リダイレクト
@@ -197,5 +197,7 @@ router.post('/register',function(req, res, next){
     }
   ])
 })
+
+
 
 module.exports = router;
