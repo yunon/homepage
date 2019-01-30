@@ -77,22 +77,29 @@ app.get('/contents/:sourcedata',function(req, res){
 
     fs.readFile(`${__dirname}/public/sourcecode/${req.params.sourcedata}.md`,'utf8',
     function(err, data){
+        var title, tags, author;
+
         if(err){
             console.log('eeerrr');
-            var html = '<p> not found </p>'
+            var html = '<p> not found </p>';
+
+            title = tags = author = 'not found';
         }else{
             // メタデータを取得 (独自関数)
             var [meta_json, data2] = getMeta(data);
             // markdownをhtmlに変換
             var html = marked(data2);
+
+            title = meta_json.title;
+            tags = meta_json.tags;
+            author = meta_json.author;
             
         }
-
         res.render('test.ejs',{
             test : html,
-            title : meta_json.title,
-            tags : meta_json.tags,
-            author : meta_json.author
+            title : title,
+            tags : tags,
+            author : author
         })
     })
 })
@@ -123,7 +130,10 @@ function getMeta(data){
         json = data.match(/---[\r\n|\n|\r][\s\S]+---[\r\n|\n|\r]/)[0];
     
         // '---'で囲まれた文字列を排除したデータを取得
-        md = data.replace(/---[\r\n|\n|\r][\s\S]+---[\r\n|\n|\r]/,'');
+        md = data.replace(/title:\s.+[\r\n|\n|\r]/,'');
+        md = md.replace(/tags:\s.+[\r\n|\n|\r]/,'');
+        md = md.replace(/author:\s.+[\r\n|\n|\r]/,'');
+        md = md.replace(/slide:\s.+[\r\n|\n|\r]/,'');
     
         // メタデータの各プロパティを取得
         title = json.match(/title:\s.+/)[0].replace(/title:\s/,'');
