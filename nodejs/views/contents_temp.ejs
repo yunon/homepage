@@ -111,13 +111,13 @@
       }
       .body h1, .body h2, .body h3, .body h4{
         padding-left: 0.2em;
-        margin-top: 2em;
+        margin-top: 1.2em;
         margin-bottom: 1.15em;
         border-bottom: solid;
         border-top-color:rgb(165, 164, 164);
         border-bottom-color: rgb(165, 164, 164);
       }
- 
+
 
     </style>
     
@@ -136,6 +136,10 @@
           <div class="col-sm-12">
 
                 <div class="body">
+                    <h1 class='ti' style='margin:0;font-weight:bold;line-height:1.3em;'><%= title %></h1>
+                    Author :     <%= author %><br>
+                    tags :     <%= tags %>
+                    
                     <%- test %>
                 </div>
           </div>   

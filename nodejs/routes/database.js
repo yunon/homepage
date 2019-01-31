@@ -50,7 +50,7 @@ router.post('/return_json', function(req, res, next){
   }  
   
   // sql文を置き換え
-  var sql = `SELECT id, title, time, group_concat(tagname) AS "tagname" FROM sourceTagJoin WHERE id IN ${word} GROUP BY id ORDER BY ${colname} ${filter} LIMIT ${num} , 10`;
+  var sql = `SELECT id, title, time, group_concat(tagname) AS "tagname" FROM sourceTagJoin WHERE id IN ${word} GROUP BY id ORDER BY ${colname} ${filter} LIMIT ${num} , 20`;
   
   // 同期処理をする
   db.serialize(function(){
@@ -82,6 +82,7 @@ router.post('/register',function(req, res, next){
   var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
   // ランダムな10文字の英数字
   var strRandom = '';
+  var meta;
 
   // タグを空白で分割する
   tag = tag.split(/\s+/);
@@ -106,13 +107,15 @@ router.post('/register',function(req, res, next){
         // ループ条件
         function(){
           if(!status){
+            // idとtitleをsourcedataテーブルに登録
+            db.run(`INSERT INTO sourcedata(id, title) VALUES("${strRandom}","${title}")`);
             next();
           }
           return status;
         },
         // 非同期処理
         function(callback){
-
+          console.log(1); ////
           var str = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPUQRSTUVWXYZ';
           var strlen  = str.length;
           // 生成する文字列の長さ
@@ -126,7 +129,7 @@ router.post('/register',function(req, res, next){
           // dbを同期処理
           db.serialize(function(){
             // SQL文を実行
-            db.each(sql, function(err, row){
+            db.get(sql, function(err, row){
               if(err){
                 console.error('ERROR!!!', err);
                 return;
@@ -146,12 +149,13 @@ router.post('/register',function(req, res, next){
     function(next){
       // foreachの同期処理version
       async.each(tag,function(i,callback){
+        console.log(2)//////
         // 同期処理
         db.serialize(function(){
 
           // 登録済みのタグか確認
           sql = `SELECT COUNT(*) AS "count" FROM tagdata WHERE tagname = "${i}"`;
-          db.each(sql, function(err, row){
+          db.get(sql, function(err, row){
             if(err){
               console.error('ERROR', err);
               return;
@@ -164,28 +168,30 @@ router.post('/register',function(req, res, next){
 
           // tagdataテーブルからtagIDを取得
           sql = `SELECT tagID FROM tagdata WHERE tagname="${i}"`;
-          db.each(sql, function(err, row){
+          db.get(sql, function(err, row){
             if(err){
               console.error('ERROR', err);
               return;
             }
+            console.log(row);
             // tagテーブルにidとタグIDを登録
             db.run(`INSERT INTO tag VALUES("${strRandom}","${row.tagID}")`);
+            console.log(3)
             callback();
           })
         })
       },function(err){
         if(err){
-          console.log(err);
+
         }
         next();
       });
-      // idとtitleをsourcedataテーブルに登録
-      db.run(`INSERT INTO sourcedata(id, title) VALUES("${strRandom}","${title}")`);
     },
     //非同期処理(3)
     // ファイル生成など
     function(next){
+
+      console.log('end')////
 
       // ファイル作成
       fs.writeFile(`./public/sourcecode/${strRandom}.md`,sourcecode,function(err){return});
