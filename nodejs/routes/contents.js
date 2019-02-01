@@ -26,15 +26,39 @@ router.get('/:sourcedata',function(req, res){
             var html = marked(data2);
 
             title = meta_json.title;
-            tags = meta_json.tags;
-            author = meta_json.author;
+            tags = `tags  :    ${meta_json.tags}`;
+            author = `Author  :      ${meta_json.author}<br>`;
+            var meta = author+tags;
         }
-        res.render('contents_temp.ejs',{
-            test : html,
-            title : title,
-            tags : tags,
-            author : author
-        })
+
+        // ログイン状態の管理
+        if(req.session.loginStatus){
+                var login = (function(){/*
+                    <p> :name </p>
+                    <button id="logout">logout</button>
+                    <script>
+                        $("#logout").on("click",()=>{
+                            document.cookie = "connect.sid=; max-age=0";
+                        })
+                    </script>
+                */}).toString().match(/\/\*([^]*)\*\//)[1].replace(':name',req.session.loginData.name);
+                res.render('contents_temp.ejs',{
+                    main : html,
+                    title : title,
+                    meta : meta,
+                    loginStatus : login
+                })            
+        }else{
+            fs.readFile('public/loginStatus.html','utf8',function(err,data){
+                if(err)console.log(err);
+                res.render('contents_temp.ejs',{
+                    main : html,
+                    title : title,
+                    meta : meta,
+                    loginStatus : data
+                })
+            })
+        }
     })
 });
 

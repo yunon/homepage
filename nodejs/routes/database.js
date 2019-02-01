@@ -115,7 +115,6 @@ router.post('/register',function(req, res, next){
         },
         // 非同期処理
         function(callback){
-          console.log(1); ////
           var str = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPUQRSTUVWXYZ';
           var strlen  = str.length;
           // 生成する文字列の長さ
@@ -149,7 +148,6 @@ router.post('/register',function(req, res, next){
     function(next){
       // foreachの同期処理version
       async.each(tag,function(i,callback){
-        console.log(2)//////
         // 同期処理
         db.serialize(function(){
 
@@ -190,8 +188,6 @@ router.post('/register',function(req, res, next){
     //非同期処理(3)
     // ファイル生成など
     function(next){
-
-      console.log('end')////
 
       // ファイル作成
       fs.writeFile(`./public/sourcecode/${strRandom}.md`,sourcecode,function(err){return});

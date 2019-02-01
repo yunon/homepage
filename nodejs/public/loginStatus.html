@@ -1,0 +1,11 @@
+<button id="loginBtn">login</button>
+<button id="signBtn">sign up</button>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $('#loginBtn').on('click',function(){
+        window.location.href = "http://localhost:3000/login?redirect="+location.pathname;
+    })
+    $('#signBtn').on('click',function(){
+        window.location.href = "http://localhost:3000/signup?redirect="+location.pathname;
+    })
+</script>
