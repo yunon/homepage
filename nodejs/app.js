@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var ejs = require('ejs');
 var session = require('express-session');
+var fs = require('fs');
 
 // cookie-parser(クッキーを利用する際に必要)
 var cookieParser = require('cookie-parser');
@@ -16,32 +17,17 @@ app.use(bodyParser());
 // テンプレートエンジンはEJSを使うよと宣言？
 app.engine('ejs', ejs.renderFile);
 
-app.listen(3000);
-
-// publicディレクトリを公開
-app.use(express.static('public'));
 
 var database = require('./routes/database');
-var contents = require('./routes/contents');
+var contents = require('./routes/contents')
+
+app.listen(3000);
+
+// 静的ファイル置き場
+app.use(express.static('public'));
 
 app.use('/database', database);
 app.use('/contents', contents);
-
-
-
-// 試しにクッキーを使ってみる
-app.get('/test_cookie',function(req, res){
-    // クッキーの取得
-    var cnt = req.cookies.cnt == undefined ? 0 : req.cookies.cnt;
-    cnt++;
-
-    // クッキーの送信
-    res.cookie('cnt',cnt,{maxAge:60000});
-    // EJSを返す
-    res.render('temp.ejs',{
-        cnt: cnt
-    });
-});
 
 // sessionの利用宣言
 app.use(session({
@@ -53,6 +39,34 @@ app.use(session({
     }
 }));
 
+//　ホームページ
+app.get('/',function(req, res){
+    var loginStatus = req.session.login;
+    var html = '';
+    if(loginStatus == undefined){
+        html = '<button>login</button><button>sign up</button>';
+    }
+    res.render('homepage.ejs',{
+        loginStatus : html
+    });
+})
+
+// 試しにクッキーを使ってみる
+app.get('/test_cookie',function(req, res){
+    // クッキーの取得
+    var cnt = req.cookies.cnt == undefined ? 0 : req.cookies.cnt;
+    cnt++;
+
+    // クッキーの送信
+    res.cookie('cnt',cnt,{maxAge:60000});
+    // EJSを返す
+    res.render('test.ejs',{
+        cnt: cnt
+    });
+});
+
+
+
 // 試しにセッションを使ってみる
 app.get('/test_session',function(req, res){
     // セッションの取得
@@ -61,7 +75,7 @@ app.get('/test_session',function(req, res){
     // セッションの保存
     req.session.cnt = cnt;
 
-    res.render('temp.ejs',{
+    res.render('test.ejs',{
         cnt : cnt
     });
 });
