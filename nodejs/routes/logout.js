@@ -6,10 +6,11 @@ var router = express.Router();
  * http://localhost:3000/logout
  */
 router.get('/',function(req, res){
+    // セッションを削除
     delete req.session.loginStatus;
     delete req.session.loginData;
-
-    res.redirect();
+    // リダイレクト
+    res.redirect(`http://localhost:3000${req.query.redirect}`);
 })
 
 module.exports = router;

@@ -5,6 +5,7 @@ var sqlite3 = require("sqlite3").verbose();
 var async = require('async');
 
 /**
+ *  サインアップ画面の表示
  *  http://localhost:3000/signup
  */
 router.get('/',function(req, res){
@@ -36,27 +37,25 @@ router.get('/',function(req, res){
 
     */}).toString().match(/\/\*([^]*)\*\//)[1];
 
+    // エラーメッセージ処理
     if(req.query.err_name){
         html = html.replace(':message','<p>エラー：ユーザ名が既に登録されています</p><br>');
     }else{
         html = html.replace(':message','');
-    }
-    var login = null;
-    if(req.session.login){
-        
-    }else{
-        res.render('contents_temp.ejs',{
-            title: 'ユーザー登録画面',
-            meta : null,
-            main: html,
-            loginStatus : null
-        });
-    }
+    }  
+    res.render('contents_temp.ejs',{
+        title: 'ユーザー登録画面',
+        meta : null,
+        main: html,
+        loginStatus : null
+    });
+
 
 });
 
 /**
  *  Postを受けてユーザ情報をデータベースに登録
+ *  http://localhost:3000/signup
  */
 router.post('/',function(req, res){
 

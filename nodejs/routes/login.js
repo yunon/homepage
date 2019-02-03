@@ -13,6 +13,7 @@ router.get('/',function(req, res){
 
         <form action='http://localhost:3000/login' method='post' name="form" id="form1">
             <fieldset>
+                :message
                 <p>NAME <input type="text" name="name" required><p>
                 <p>PASSWORD <input type="text" name="pass" required></p>
                 <input type="hidden" name="redirect" id="rd">
@@ -39,18 +40,18 @@ router.get('/',function(req, res){
 
     */}).toString().match(/\/\*([^]*)\*\//)[1];
 
- 
-    if(req.session.login){
-        
+    // エラーメッセージ処理
+    if(req.query.err){
+        html = html.replace(':message','<p>エラー： ログインできません <p><br>');
     }else{
-
-        res.render('contents_temp.ejs',{
-            title: 'ログイン画面',
-            meta : null,
-            main: html,
-            loginStatus : null
-        });
+        html = html.replace(':message', '');
     }
+    res.render('contents_temp.ejs',{
+        title: 'ログイン画面',
+        meta : null,
+        main: html,
+        loginStatus : null
+    });
 
 });
 
@@ -59,10 +60,41 @@ router.get('/',function(req, res){
  *  http://localhost:3000/login
  */
 router.post('/',function(req, res){
-    
+    // ポストリクエストを取得
+    var name = req.body.name;
+    var pass = req.body.pass;
 
-    console.log(req.body.name);
-    res.redirect(`http://localhost:3000${req.body.redirect}`);
+    // データベースオープン
+    var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
+
+    db.serialize(function(){
+        var sql = `select name, pass from user where name = "${name}"`;
+        db.get(sql,function(err,data){
+            if(err){
+                console.log(err);
+                // TODO エラーならログイン画面に戻ってエラーメッセージを表示
+                res.redirect(`http://localhost:3000/login?redirect=${req.body.redirect}&err=true`);
+            }else{
+                // パスワードが一致しているかを確認
+                if(data.pass != pass){
+                    console.log(err);
+                    // TODO エラーならログイン画面へ
+                    res.redirect(`http://localhost:3000/login?redirect=${req.body.redirect}&err=true`);
+                }else{
+                    // ログイン成功時
+                    // セッションの登録
+                    req.session.loginStatus = true;
+                    req.session.loginData = {
+                        name: name,
+                        pass: pass
+                    }
+                    // リダイレクト
+                    res.redirect(`http://localhost:3000${req.body.redirect}`);
+                }
+            }    
+        })
+    })
+    
 });
 
 module.exports = router;

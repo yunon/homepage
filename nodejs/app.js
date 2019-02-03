@@ -30,11 +30,12 @@ app.use(session({
 // 静的ファイル置き場
 app.use(express.static('public'));
 // ルーティング
-app.use('/', require('./routes/homepage'));
 app.use('/database', require('./routes/database'));
-app.use('/contents', require('./routes/contents'));
 app.use('/login', require('./routes/login'));
+app.use('/logout', require('./routes/logout'));
 app.use('/signup', require('./routes/signup'));
+app.use('/', require('./routes/homepage'));
+
 
 // サーバー起動
 app.listen(3000);

@@ -23,6 +23,7 @@ font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
   text-align: center;
   font-size: 50px;
   font-weight: bold;
+  cursor : pointer;
 }
 
 /*------------------------- Body ----------------------------------*/
