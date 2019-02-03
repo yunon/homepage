@@ -11,7 +11,7 @@ var async = require('async');
 router.get('/',function(req, res){
     var html = (function() {/*
 
-        <form action='http://localhost:3000/signup' method='post' id="form1">
+        <form action='/signup' method='post' id="form1">
             <fieldset>
                 :message
                 <p>NAME <input type="text" name="name" required><p>
@@ -76,7 +76,7 @@ router.post('/',function(req, res){
                 console.log(err);
 
                 // エラーの時はもう一度登録画面を返す
-                res.redirect(`http://localhost:3000/signup?redirect=${url}&err_name=true`);
+                res.redirect(`/signup?redirect=${url}&err_name=true`);
             }else{
                 db.close();
 
@@ -87,10 +87,11 @@ router.post('/',function(req, res){
                 req.session.loginStatus = true;
                 req.session.loginData = {
                     name : name,
-                    pass: pass
+                    pass: pass,
+                    icon : 'user.jpg'
                 }
                 // リダイレクト
-                res.redirect(`http://localhost:3000${url}`);
+                res.redirect(url);
             }
 
         })

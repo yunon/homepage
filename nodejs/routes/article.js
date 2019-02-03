@@ -5,22 +5,11 @@ var fs = require('fs');
 var async = require('async');
 
 
-/* サンプルAPI① 
- * http://localhost:3000/samples にGETメソッドのリクエストを投げると、
- * JSON形式で文字列を返す。
- *
-router.get('/', function(req, res, next) {
-  var param = {"値":"これはサンプルAPIです"};
-  res.header('Content-Type', 'application/json; charset=utf-8')
-  res.send(param);
-});
-*/
-
 /**
- *  POSTリクエストを受けてデータベースからの結果をJSONで返すAPI
- *  url: http://localhost:3000/database/return_json
+ *  記事の情報をjson形式で返すAPI
+ *  url: http://localhost:3000/article/return
  **/
-router.post('/return_json', function(req, res, next){
+router.post('/return', function(req, res, next){
 
   // レスポンスヘッダーの設定
   res.header('Content-Type', 'application/json; charset=utf-8');
@@ -36,9 +25,9 @@ router.post('/return_json', function(req, res, next){
 
   // リクエストの種類によって処理を分岐
   if(searchtype == 0){
-    word = `(SELECT id FROM sourcedata WHERE title LIKE "%${word}%")`;
+    word = `(SELECT id FROM article WHERE title LIKE "%${word}%")`;
   }else{
-    word = `(SELECT id FROM tagJoin Where tagname="${word}")`;
+    word = `(SELECT id FROM tag_view Where tagname="${word}")`;
   }
   if(filter == "new"){
       filter = "ASC";
@@ -50,7 +39,7 @@ router.post('/return_json', function(req, res, next){
   }  
   
   // sql文を置き換え
-  var sql = `SELECT id, title, time, group_concat(tagname) AS "tagname" FROM sourceTagJoin WHERE id IN ${word} GROUP BY id ORDER BY ${colname} ${filter} LIMIT ${num} , 20`;
+  var sql = `SELECT id, title, time, group_concat(tagname) AS "tagname" FROM article_tag_view WHERE id IN ${word} GROUP BY id ORDER BY ${colname} ${filter} LIMIT ${num} , 20`;
   
   // 同期処理をする
   db.serialize(function(){
@@ -69,10 +58,10 @@ router.post('/return_json', function(req, res, next){
 
 
 /**
- * POSTリクエストを受けてデータベースに登録処理をするAPI
- * url: http://localhost:3000/database/register
+ * 新しい記事の登録処理をする
+ * url: http://localhost:3000/article/post
  */
-router.post('/register',function(req, res, next){
+router.post('/post',function(req, res, next){
 
   // リクエストを取得
   var sourcecode = req.body.sourcecode;
@@ -108,7 +97,7 @@ router.post('/register',function(req, res, next){
         function(){
           if(!status){
             // idとtitleをsourcedataテーブルに登録
-            db.run(`INSERT INTO sourcedata(id, title) VALUES("${strRandom}","${title}")`);
+            db.run(`INSERT INTO article(id, title) VALUES("${strRandom}","${title}")`);
             next();
           }
           return status;
@@ -124,7 +113,7 @@ router.post('/register',function(req, res, next){
           }
           // -- ID被りしていないか確認 --
           // (注意)テンプレートリテラルを使うときはバッククオートを使う必要がある
-          var sql = `SELECT COUNT(*) AS "count" FROM sourcedata WHERE id = "${strRandom }"`;
+          var sql = `SELECT COUNT(*) AS "count" FROM article WHERE id = "${strRandom }"`;
           // dbを同期処理
           db.serialize(function(){
             // SQL文を実行
@@ -151,36 +140,47 @@ router.post('/register',function(req, res, next){
         // 同期処理
         db.serialize(function(){
 
-          // 登録済みのタグか確認
-          sql = `SELECT COUNT(*) AS "count" FROM tagdata WHERE tagname = "${i}"`;
-          db.get(sql, function(err, row){
-            if(err){
-              console.error('ERROR', err);
-              return;
+          async.series([
+            function(next){
+              // 登録済みのタグか確認
+              sql = `SELECT COUNT(*) AS "count" FROM tag WHERE tagname = "${i}"`;
+              db.get(sql, function(err, row){
+                if(err){
+                  console.error('ERROR', err);
+                  return;
+                }
+                // 新規タグならデータベース(tagdataテーブル)に登録
+                if(row.count == 0){
+                  db.run(`INSERT INTO tag(tagname) VALUES("${i}")`,(err)=>{
+                    if(err){
+                      console.log(err);
+                      return;
+                    }
+                    next();
+                  })
+                }else{
+                  next();
+                }
+              })
+            },
+            function(next){
+                // tagdataテーブルからtagIDを取得
+                sql = `SELECT tagID FROM tag WHERE tagname="${i}"`;
+                db.get(sql, function(err, row){
+                  if(err){
+                    console.error('ERROR', err);
+                    return;
+                  }
+                  // tagテーブルにidとタグIDを登録
+                  db.run(`INSERT INTO tag_article VALUES("${strRandom}","${row.tagID}")`);
+                  callback();
+                })
             }
-            // 新規タグならデータベース(tagdataテーブル)に登録
-            if(row.count == 0){
-              db.run(`INSERT INTO tagdata(tagname) VALUES("${i}")`);
-            }
-          })
-
-          // tagdataテーブルからtagIDを取得
-          sql = `SELECT tagID FROM tagdata WHERE tagname="${i}"`;
-          db.get(sql, function(err, row){
-            if(err){
-              console.error('ERROR', err);
-              return;
-            }
-            console.log(row);
-            // tagテーブルにidとタグIDを登録
-            db.run(`INSERT INTO tag VALUES("${strRandom}","${row.tagID}")`);
-            console.log(3)
-            callback();
-          })
+          ])
         })
       },function(err){
         if(err){
-
+          console.log(err);
         }
         next();
       });

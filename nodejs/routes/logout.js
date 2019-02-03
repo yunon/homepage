@@ -10,7 +10,7 @@ router.get('/',function(req, res){
     delete req.session.loginStatus;
     delete req.session.loginData;
     // リダイレクト
-    res.redirect(`http://localhost:3000${req.query.redirect}`);
+    res.redirect(req.query.redirect);
 })
 
 module.exports = router;

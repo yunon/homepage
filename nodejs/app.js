@@ -30,7 +30,8 @@ app.use(session({
 // 静的ファイル置き場
 app.use(express.static('public'));
 // ルーティング
-app.use('/database', require('./routes/database'));
+app.use('/settings', require('./routes/settings'));
+app.use('/article', require('./routes/article'));
 app.use('/login', require('./routes/login'));
 app.use('/logout', require('./routes/logout'));
 app.use('/signup', require('./routes/signup'));

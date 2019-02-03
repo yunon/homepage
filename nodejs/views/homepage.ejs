@@ -135,7 +135,7 @@
                   <div id="formbody" style="height: 1000px">
                 
                           <div style="height: 100%; background-color: #a3a3a3">
-                            <form action="http://localhost:3000/database/register" method="post" name="form" id="form1" style="height: 100%">
+                            <form action="http://localhost:3000/article/post" method="post" name="form" id="form1" style="height: 100%">
                               <fieldset style="height: 100%">
                                 <legend></legend>
                 
@@ -294,7 +294,7 @@
     function post(){
 
        $.ajax({
-          url:'http://localhost:3000/database/return_json',
+          url:'http://localhost:3000/article/return',
           type:'POST',
           data:{
               'num': num,

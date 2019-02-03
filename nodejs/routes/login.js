@@ -11,7 +11,7 @@ var async = require('async');
 router.get('/',function(req, res){
     var html = (function() {/*
 
-        <form action='http://localhost:3000/login' method='post' name="form" id="form1">
+        <form action='/login' method='post' name="form" id="form1">
             <fieldset>
                 :message
                 <p>NAME <input type="text" name="name" required><p>
@@ -68,30 +68,34 @@ router.post('/',function(req, res){
     var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
 
     db.serialize(function(){
-        var sql = `select name, pass from user where name = "${name}"`;
+        var sql = `select name, pass, icon from user where name = "${name}"`;
         db.get(sql,function(err,data){
-            if(err){
+            if(err || data == undefined){
                 console.log(err);
+                db.close();
                 // TODO エラーならログイン画面に戻ってエラーメッセージを表示
-                res.redirect(`http://localhost:3000/login?redirect=${req.body.redirect}&err=true`);
+                res.redirect(`/login?redirect=${req.body.redirect}&err=true`);
+            }else
+            // パスワードが一致しているかを確認
+            if(data.pass != pass){
+                
+                console.log(err);
+                db.close();
+                // TODO エラーならログイン画面へ
+                res.redirect(`/login?redirect=${req.body.redirect}&err=true`);         
             }else{
-                // パスワードが一致しているかを確認
-                if(data.pass != pass){
-                    console.log(err);
-                    // TODO エラーならログイン画面へ
-                    res.redirect(`http://localhost:3000/login?redirect=${req.body.redirect}&err=true`);
-                }else{
-                    // ログイン成功時
-                    // セッションの登録
-                    req.session.loginStatus = true;
-                    req.session.loginData = {
-                        name: name,
-                        pass: pass
-                    }
-                    // リダイレクト
-                    res.redirect(`http://localhost:3000${req.body.redirect}`);
+                // ログイン成功時
+                // セッションの登録
+                req.session.loginStatus = true;
+                req.session.loginData = {
+                    name: name,
+                    pass: pass,
+                    icon: data.icon
                 }
-            }    
+                db.close();
+                // リダイレクト
+                res.redirect(req.body.redirect);
+            }
         })
     })
     

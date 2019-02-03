@@ -19,34 +19,30 @@ router.get('/',function(req, res){
 /**
  * ユーザーのプロフィールページを返す
  */
-router.get('/:user',function(req, res){
+router.get('/:user',function(req, res, next){
 
     var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
     var temp = (function(){/*
-         名前 : <br>
+         <img src="/image/user_icon/:icon" style='width:50px;heigh:50px;'><br>
+         名前 : 
          :name <br>
-         登録日 : <br>
+         登録日 : 
          :time <br>
     */}).toString().match(/\/\*([^]*)\*\//)[1];
 
     db.serialize(function(){
-        var sql = `select name, pass, date from user where name = "${req.params.user}"`;
+        var sql = `select name, pass, date, icon from user where name = "${req.params.user}"`;
         db.get(sql,function(err,data){
 
             if(err){
                 console.log(err);
             }else if(data == undefined){
-                //  エラーメッセージを表示
-                res.render('profile.ejs',{
-                    title : 'not found',
-                    main : 'not found',
-                    loginStatus : myfunc.login_html(req.session)
-                })
+                next();
             }else{
                 // プロフィール画面を表示
                 res.render('profile.ejs',{
                     title : `${data.name}さんのプロフィール`,
-                    main : temp.replace(':name',data.name).replace(':time',data.date),
+                    main : temp.replace(':name',data.name).replace(':time',data.date).replace(':icon',data.icon),
                     loginStatus : myfunc.login_html(req.session),
                 });        
             }   
