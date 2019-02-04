@@ -15,9 +15,33 @@ router.get('/', function(req, res){
     res.redirect(`/login?redirect=/article`);
     return;
   }
+  var html = (function(){/*
+    <div id="formbody" style="height: 1000px">
+      <div style="height: 100%; background-color: #a3a3a3">
+        <form action="/article/post" method="post" name="form" id="form1" style="height: 100%">
+          <fieldset style="height: 100%">
+
+            <p>タイトル <input type="text" name="title" required><p>
+            <p>タグ <input type="text" name="tag"></p>
+            <p>コンテンツ</p>
+            <p class="p"><textarea id="codeeditor" name="sourcecode"></textarea></p>
+            <button type="submit" class="btn btn-primary" id="submit">送信する</button><button type="reset" class="btn btn-primary" id="reset" onclick="return confirm('本当に書き込み内容をリセットしますか？')">リセットする</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <script>
+      // codemirror の実装   ※textareaの場合fromTextAreaをつけないといけない
+      var editor = CodeMirror.fromTextArea(document.getElementById("codeeditor"), {
+        mode: "javascript", lineNumbers: true, autoCloseBrackets: true, theme: "3024-day", 
+      }); 
+    </script>
+
+  */}).toString().match(/\/\*([^]*)\*\//)[1];
+
   res.render('profile.ejs',{
     title: '記事を投稿',
-    main: '',
+    main: html,
     loginStatus: myfunc.login_html(req.session)
   })
 })
@@ -56,7 +80,7 @@ router.post('/return', function(req, res, next){
   }  
   
   // sql文を置き換え
-  var sql = `SELECT id, title, time, group_concat(tagname) AS "tagname" FROM article_tag_view WHERE id IN ${word} GROUP BY id ORDER BY ${colname} ${filter} LIMIT ${num} , 20`;
+  var sql = `SELECT id, title, time, group_concat(tagname) AS "tagname", name, icon FROM article_tag_user_view WHERE id IN ${word} GROUP BY id ORDER BY ${colname} ${filter} LIMIT ${num} , 20`;
   
   // 同期処理をする
   db.serialize(function(){
@@ -81,14 +105,18 @@ router.post('/return', function(req, res, next){
 router.post('/post',function(req, res, next){
 
   // リクエストを取得
-  var sourcecode = req.body.sourcecode;
+  
   var title = req.body.title;
   var tag = req.body.tag;
+  var name = req.session.loginData.name;
   // データベースオープン
   var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
   // ランダムな10文字の英数字
   var strRandom = '';
-  var meta;
+  var meta = `---\ntitle: ${title}\ntags: ${tag}\nauthor: ${name}\n---\n`;
+  var sourcecode = meta+req.body.sourcecode;
+  // ユーザID
+  var user_id;
 
   // タグを空白で分割する
   tag = tag.split(/\s+/);
@@ -103,6 +131,14 @@ router.post('/post',function(req, res, next){
 
   // 一部を同期処理にする
   async.series([
+    // ユーザIDの取得
+    function(next){
+      db.get(`SELECT id FROM user WHERE name = "${name}"`,(err, data)=>{
+        if(err)console.log(err);
+        user_id = data.id;
+        next();
+      })
+    },
     // 非同期処理(1)
     // ランダムな10桁の英数字を生成する
     function(next){
@@ -113,8 +149,8 @@ router.post('/post',function(req, res, next){
         // ループ条件
         function(){
           if(!status){
-            // idとtitleをsourcedataテーブルに登録
-            db.run(`INSERT INTO article(id, title) VALUES("${strRandom}","${title}")`);
+            // idとtitleとユーザIDをsourcedataテーブルに登録
+            db.run(`INSERT INTO article(id, title, user) VALUES("${strRandom}","${title}","${user_id}")`);
             next();
           }
           return status;

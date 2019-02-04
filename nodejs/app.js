@@ -1,3 +1,11 @@
+/*
+ TODO :
+ １、　レンダー周りの修正
+ ２、　not foundの記事を削除する処理
+ ３、　サニタイズ、アサーションチェック
+ ４、　コメント欄実装
+ */
+
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
