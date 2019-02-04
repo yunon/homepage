@@ -3,7 +3,24 @@ var router = express.Router();
 var sqlite3 = require("sqlite3").verbose();
 var fs = require('fs');
 var async = require('async');
+var myfunc = require('../myfunc');
 
+/**
+ *  記事の投稿画面を表示する
+ *  http://localhost:3000/article
+ */
+router.get('/', function(req, res){
+  // ログインチェック
+  if(!req.session.loginStatus){
+    res.redirect(`/login?redirect=/article`);
+    return;
+  }
+  res.render('profile.ejs',{
+    title: '記事を投稿',
+    main: '',
+    loginStatus: myfunc.login_html(req.session)
+  })
+})
 
 /**
  *  記事の情報をjson形式で返すAPI

@@ -15,9 +15,10 @@ exports.login_html = function(session){
             <div style='display:flex'>
                 <button id="logout">ログアウト</button>
                 <button id="setting">設定</button>
+                <button id="new_article">投稿</button>
             </div>
             <style>
-                #logout,#setting,#prof{
+                #logout,#setting,#prof,#new_article{
                     width : 120px;
                     cursor : pointer;
                     margin-left: 0;
@@ -37,6 +38,9 @@ exports.login_html = function(session){
                 })
                 $('#setting').on('click',()=>{
                     window.location.href = '/settings';
+                })
+                $('#new_article').on('click',()=>{
+                    window.location.href = '/article';
                 })
             </script>
         */}).toString().match(/\/\*([^]*)\*\//)[1].replace(/:name/g,session.loginData.name)
