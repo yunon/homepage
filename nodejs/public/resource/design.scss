@@ -1,9 +1,34 @@
+// テストsass
+@function Double($val){
+    @return $val * 2;
+}
+.test_gulp{
+    @extend h1
+}
+// @mixin ミックスイン名($変数1 : 初期値, $変数2 : 初期値)
+@mixin hoge($color : white, $fsize : 16px){
+    color : $color;
+    font-size : $fsize;
+}
+.function_test{
+    margin : Double(5);
+}
+.extend_test{
+    @extend body
+}
+.mixin_test_1{
+    @include hoge();
+}
+.mixin_test_2{
+    @include hoge(black, 22px);
+}
 
+@import "mybootstrap.scss";
 h1 {
-padding: 0.1em 0;/*上下の余白*/
+    padding: 0.1em 0;/*上下の余白*/
 
-margin: 0;
-font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
+    margin: 0;
+    font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
 }
 body{
     background-color: rgb(238, 238, 238);
@@ -70,25 +95,25 @@ body{
 }
 /* フォームのスタイル */     
 button{
-margin-left: 15px;
+    margin-left: 15px;
 }
 #formbody div form{
-border: solid;
-border-color: #6e6e6e;
-margin-bottom: 25px;
-padding: 10px;
+    border: solid;
+    border-color: #6e6e6e;
+    margin-bottom: 25px;
+    padding: 10px;
 }
 p input{
-width: 100%;
+    width: 100%;
 }
 #codeeditor{
-height: 70%;
+    height: 70%;
 }
 /* codemirror */
 .CodeMirror {
-font-family: "Ubuntu Mono";
-line-height: 1.2em;
-height: 100%;
+    font-family: "Ubuntu Mono";
+    line-height: 1.2em;
+    height: 100%;
 }
 /* ホームコンテンツのスタイル */
 #contents{
@@ -146,34 +171,34 @@ height: 100%;
     -webkit-transition: .2s;
     transition: .2s;
     margin-top: 5px;
+    &::before{
+        position: absolute;
+        top: 0;
+        left: -10px;
+        content: '';
+        width: 0;
+        height: 0;
+        border-color: transparent #c9c9c9 transparent transparent;
+        border-style: solid;
+        border-width: 10px 10px 10px 0;
+        -webkit-transition: .2s;
+        transition: .2s;
+    }
+    &::after{
+        position: absolute;
+        top: 0;
+        left: -10px;
+        content: '';
+        width: 0;
+        height: 0;
+        border-color: transparent #c9c9c9 transparent transparent;
+        border-style: solid;
+        border-width: 10px 10px 10px 0;
+        -webkit-transition: .2s;
+        transition: .2s;
+    }
   }
-  .tag::before{
-    position: absolute;
-    top: 0;
-    left: -10px;
-    content: '';
-    width: 0;
-    height: 0;
-    border-color: transparent #c9c9c9 transparent transparent;
-    border-style: solid;
-    border-width: 10px 10px 10px 0;
-    -webkit-transition: .2s;
-    transition: .2s;
-    
-  }
-  .tag::after{
-    position: absolute;
-    top: 50%;
-    left: 0;
-    z-index: 2;
-    display: block;
-    content: '';
-    width: 6px;
-    height: 6px;
-    margin-top: -3px;
-    background-color: #fff;
-    border-radius: 100%; 
-}
+
 ul li span{
     display: block;
     max-width: 100px;
@@ -182,22 +207,22 @@ ul li span{
     overflow: hidden;
     height: 25px;
     text-align: center;
-  }
-  .tag{
-      &:hover{
+}
+.tag{
+    &:hover{
         background-color: rgb(114, 114, 114);
         color: #fff;
         &:before{
             border-right-color: rgb(114, 114, 114);  
         }
-      }
-  }
+    }
+}
 
-  /* ホームコンテンツのスタイル */
-  #add{
+/* ホームコンテンツのスタイル */
+#add{
     background-color:#FFF;
-  }
-  #contents{
+}
+#contents{
     border-top: solid;
     border-color: #a3a3a3;
     display: flex;
