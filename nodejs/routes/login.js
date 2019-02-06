@@ -71,7 +71,7 @@ router.post('/',function(req, res){
         var sql = `select name, pass, icon from user where name = "${name}"`;
         db.get(sql,function(err,data){
             if(err || data == undefined){
-                console.log(err);
+                console.log('名前が該当しない');
                 db.close();
                 // TODO エラーならログイン画面に戻ってエラーメッセージを表示
                 res.redirect(`/login?redirect=${req.body.redirect}&err=true`);
@@ -79,7 +79,7 @@ router.post('/',function(req, res){
             // パスワードが一致しているかを確認
             if(data.pass != pass){
                 
-                console.log(err);
+                console.log('パスワードが一致しない');
                 db.close();
                 // TODO エラーならログイン画面へ
                 res.redirect(`/login?redirect=${req.body.redirect}&err=true`);         
