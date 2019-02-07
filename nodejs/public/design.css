@@ -1,0 +1,269 @@
+@charset "UTF-8";
+.function_test {
+  margin: 10; }
+
+.mixin_test_1 {
+  color: white;
+  font-size: 16px; }
+
+.mixin_test_2 {
+  color: black;
+  font-size: 22px; }
+
+.container {
+  padding-top: 30px;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+
+h1, .test_gulp {
+  padding: 0.1em 0;
+  /*上下の余白*/
+  margin: 0;
+  font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif; }
+
+body, .extend_test {
+  background-color: #eeeeee; }
+
+.body {
+  margin-bottom: 40px; }
+
+.mask {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  background-image: url(image/pat3.jpg);
+  border-top: solid 3px #474655;
+  /*上線*/
+  border-bottom: solid 3px #474655;
+  /*下線*/ }
+  .mask h1, .mask .test_gulp {
+    height: 100%;
+    width: 100%;
+    margin-top: 0;
+    color: #474655;
+    letter-spacing: 0.6em;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer; }
+
+/* menu bar */
+#menu ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  position: fixed; }
+
+#menu li {
+  display: inline;
+  padding: 0px;
+  margin: 0; }
+  #menu li a {
+    display: block;
+    border-left: 8px solid #474655;
+    border-top: 1px solid #474655;
+    border-bottom: 1px solid #474655;
+    background-color: white;
+    padding: 15px 10px;
+    text-decoration: none;
+    color: #333;
+    width: 150px;
+    margin: 1px 0px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif; }
+    #menu li a:hover {
+      border-left: 8px solid #ffffff;
+      border-top: 1px solid #474655;
+      border-bottom: 1px solid #474655;
+      background-color: #d7dde9; }
+
+/* フォームのスタイル */
+button {
+  margin-left: 15px; }
+
+#formbody div form {
+  border: solid;
+  border-color: #6e6e6e;
+  margin-bottom: 25px;
+  padding: 10px; }
+
+p input {
+  width: 100%; }
+
+#codeeditor {
+  height: 70%; }
+
+/* codemirror */
+.CodeMirror {
+  font-family: "Ubuntu Mono";
+  line-height: 1.2em;
+  height: 100%; }
+
+/* ホームコンテンツのスタイル */
+#contents {
+  border-top: solid;
+  border-color: #a3a3a3;
+  display: flex;
+  padding: 10px; }
+
+#icon {
+  margin-right: 4px; }
+  #icon a img {
+    width: 40px;
+    height: 40px;
+    margin: 5px; }
+
+#href a {
+  color: black; }
+  #href a span {
+    font-weight: bold;
+    font-size: 1.1em; }
+  #href a div {
+    display: flex; }
+
+#href2 ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 0; }
+  #href2 ul li {
+    display: inline-block;
+    margin: 0em 0.5em 0;
+    padding: 0;
+    line-height: 0; }
+    #href2 ul li a:hover {
+      text-decoration: none; }
+
+.tag {
+  position: relative;
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 1em;
+  background-color: #c9c9c9;
+  border-radius: 0 3px 3px 0;
+  color: #fff;
+  font-size: 12px;
+  text-decoration: none;
+  -webkit-transition: .2s;
+  transition: .2s;
+  margin-top: 5px; }
+  .tag::before {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-color: transparent #c9c9c9 transparent transparent;
+    border-style: solid;
+    border-width: 10px 10px 10px 0;
+    -webkit-transition: .2s;
+    transition: .2s; }
+  .tag::after {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-color: transparent #c9c9c9 transparent transparent;
+    border-style: solid;
+    border-width: 10px 10px 10px 0;
+    -webkit-transition: .2s;
+    transition: .2s; }
+
+ul li span {
+  display: block;
+  max-width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 25px;
+  text-align: center; }
+
+.tag:hover {
+  background-color: #727272;
+  color: #fff; }
+  .tag:hover:before {
+    border-right-color: #727272; }
+
+/* ホームコンテンツのスタイル */
+#add {
+  background-color: #FFF; }
+
+#contents {
+  border-top: solid;
+  border-color: #a3a3a3;
+  display: flex;
+  padding: 8px;
+  position: relative; }
+
+#icon {
+  margin-right: 4px; }
+  #icon a img {
+    width: 40px;
+    height: 40px;
+    margin: 5px; }
+
+#time {
+  margin-right: 8px;
+  right: 0;
+  bottom: 0;
+  position: absolute; }
+
+#more {
+  cursor: pointer;
+  color: gray; }
+
+/* 検索テキスト周り */
+#form02 {
+  background-color: #FFF;
+  width: 270px;
+  height: 30px;
+  border: 2px grey solid;
+  padding: 0;
+  margin: 0;
+  border-radius: 10px; }
+  #form02:hover {
+    background-color: #f7fff9; }
+  #form02 input {
+    vertical-align: top;
+    margin: 0px;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: transparent; }
+    #form02 input[type="text"] {
+      margin-left: 5px;
+      width: 230px;
+      height: 25px;
+      border: none;
+      caret-color: #a3a3a3; }
+    #form02 input[type="button"] {
+      width: 30px;
+      border: none;
+      background-image: url(image/images.png);
+      background-position: center;
+      background-size: auto 90%;
+      background-repeat: no-repeat;
+      cursor: pointer; }
+    #form02 input:focus {
+      outline: none; }
+
+.body {
+  background-color: #FFFF;
+  line-height: 2em;
+  margin-top: 3em;
+  margin-bottom: 2em; }
+  .body h1, .body .test_gulp, .body h2, .body h3, .body h4 {
+    padding-left: 0.2em;
+    margin-top: 1.2em;
+    margin-bottom: 1.15em;
+    border-bottom: solid;
+    border-top-color: #a5a4a4;
+    border-bottom-color: #a5a4a4; }

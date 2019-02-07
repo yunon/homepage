@@ -1,15 +1,13 @@
-var express = require('express');
-var router = express.Router();
-var fs = require('fs');
-var sqlite3 = require("sqlite3").verbose();
-var async = require('async');
+const express = require('express');
+const router = express.Router();
+const sqlite3 = require("sqlite3").verbose();
 
 /**
  *  ログイン画面の表示
  *  http://localhost:3000/login
  */
-router.get('/',function(req, res){
-    var html = (function() {/*
+router.get('/',(req, res)=>{
+    let html = (()=>{/*
 
         <form action='/login' method='post' name="form" id="form1">
             <fieldset>
@@ -59,19 +57,19 @@ router.get('/',function(req, res){
  *  ポストを受けてログイン処理
  *  http://localhost:3000/login
  */
-router.post('/',function(req, res){
+router.post('/',(req, res)=>{
     // ポストリクエストを取得
-    var name = req.body.name;
-    var pass = req.body.pass;
+    let name = req.body.name;
+    let pass = req.body.pass;
 
     // データベースオープン
-    var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
+    const db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
 
-    db.serialize(function(){
-        var sql = `select name, pass, icon from user where name = "${name}"`;
-        db.get(sql,function(err,data){
+    db.serialize(()=>{
+        let sql = `select name, pass, icon from user where name = "${name}"`;
+        db.get(sql,(err,data)=>{
             if(err || data == undefined){
-                console.log('名前が該当しない');
+                console.log(err);
                 db.close();
                 // TODO エラーならログイン画面に戻ってエラーメッセージを表示
                 res.redirect(`/login?redirect=${req.body.redirect}&err=true`);
@@ -79,7 +77,7 @@ router.post('/',function(req, res){
             // パスワードが一致しているかを確認
             if(data.pass != pass){
                 
-                console.log('パスワードが一致しない');
+                console.log(err);
                 db.close();
                 // TODO エラーならログイン画面へ
                 res.redirect(`/login?redirect=${req.body.redirect}&err=true`);         

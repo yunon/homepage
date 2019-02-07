@@ -1,20 +1,9 @@
-/*
- TODO :
- １、　レンダー周りの修正
- ２、　not foundの記事を削除する処理
- ３、　サニタイズ、アサーションチェック
- ４、　コメント欄実装
- */
-
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var ejs = require('ejs');
-var session = require('express-session');
-var fs = require('fs');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
+const express = require('express');
+const app = express();
+const ejs = require('ejs');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 // cookie-parser(クッキーを利用する際に必要)
 app.use(cookieParser());

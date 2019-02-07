@@ -1,21 +1,21 @@
-var express = require('express');
-var router = express.Router();
-var sqlite3 = require("sqlite3").verbose();
-var fs = require('fs');
-var async = require('async');
-var myfunc = require('../myfunc');
+const express = require('express');
+const router = express.Router();
+const sqlite3 = require("sqlite3").verbose();
+const fs = require('fs');
+const async = require('async');
+const myfunc = require('../myfunc');
 
 /**
  *  記事の投稿画面を表示する
  *  http://localhost:3000/article
  */
-router.get('/', function(req, res){
+router.get('/', (req, res)=>{
   // ログインチェック
   if(!req.session.loginStatus){
     res.redirect(`/login?redirect=/article`);
     return;
   }
-  var html = (function(){/*
+  let html = (()=>{/*
     <div id="formbody" style="height: 1000px">
       <div style="height: 100%; background-color: #a3a3a3">
         <form action="/article/post" method="post" name="form" id="form1" style="height: 100%">
@@ -50,19 +50,19 @@ router.get('/', function(req, res){
  *  記事の情報をjson形式で返すAPI
  *  url: http://localhost:3000/article/return
  **/
-router.post('/return', function(req, res, next){
+router.post('/return', (req, res)=>{
 
   // レスポンスヘッダーの設定
   res.header('Content-Type', 'application/json; charset=utf-8');
 
   // データベースオープン
-  var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
+  const db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
   // リクエストを取得
-  var num = req.body.num;
-  var filter = req.body.filter;
-  var word = req.body.word;
-  var searchtype = req.body.searchtype;
-  var colname = 'time';
+  let num = req.body.num;
+  let filter = req.body.filter;
+  let word = req.body.word;
+  let searchtype = req.body.searchtype;
+  let colname = 'time';
 
   // リクエストの種類によって処理を分岐
   if(searchtype == 0){
@@ -80,12 +80,12 @@ router.post('/return', function(req, res, next){
   }  
   
   // sql文を置き換え
-  var sql = `SELECT id, title, time, group_concat(tagname) AS "tagname", name, icon FROM article_tag_user_view WHERE id IN ${word} GROUP BY id ORDER BY ${colname} ${filter} LIMIT ${num} , 20`;
+  let sql = `SELECT id, title, time, group_concat(tagname) AS "tagname", name, icon FROM article_tag_user_view WHERE id IN ${word} GROUP BY id ORDER BY ${colname} ${filter} LIMIT ${num} , 20`;
   
   // 同期処理をする
-  db.serialize(function(){
+  db.serialize(()=>{
     // SQL文を実行
-    db.all( sql , function(err, row){
+    db.all( sql ,(err, row)=>{
       if(err){
         console.log(err)
       }
@@ -102,30 +102,30 @@ router.post('/return', function(req, res, next){
  * 新しい記事の登録処理をする
  * url: http://localhost:3000/article/post
  */
-router.post('/post',function(req, res, next){
+router.post('/post',(req, res)=>{
 
   // リクエストを取得
   
-  var title = req.body.title;
-  var tag = req.body.tag;
-  var name = req.session.loginData.name;
+  let title = req.body.title;
+  let tag = req.body.tag;
+  let name = req.session.loginData.name;
   // データベースオープン
-  var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
+  const db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
   // ランダムな10文字の英数字
-  var strRandom = '';
-  var meta = `---\ntitle: ${title}\ntags: ${tag}\nauthor: ${name}\n---\n`;
-  var sourcecode = meta+req.body.sourcecode;
+  let strRandom = '';
+  let meta = `---\ntitle: ${title}\ntags: ${tag}\nauthor: ${name}\n---\n`;
+  let sourcecode = meta+req.body.sourcecode;
   // ユーザID
-  var user_id;
+  let user_id;
 
   // タグを空白で分割する
   tag = tag.split(/\s+/);
   // 配列の重複を排除する
-  tag = tag.filter(function(value, index, array){
+  tag = tag.filter((value, index, array)=>{
     return array.indexOf(value) === index;
   });
   // 空要素を削除
-  tag = tag.filter(function(value){
+  tag = tag.filter((value)=>{
     return value != '';
   })
 
@@ -144,7 +144,7 @@ router.post('/post',function(req, res, next){
     function(next){
 
       // 非同期処理を同期的にループする
-      var status = true;
+      let status = true;
       async.whilst(
         // ループ条件
         function(){
@@ -157,8 +157,8 @@ router.post('/post',function(req, res, next){
         },
         // 非同期処理
         function(callback){
-          var str = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPUQRSTUVWXYZ';
-          var strlen  = str.length;
+          const str = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPUQRSTUVWXYZ';
+          let strlen  = str.length;
           // 生成する文字列の長さ
           const strRandomlen = 10; 
           for(let i=0; i< strRandomlen; i++){
@@ -166,11 +166,11 @@ router.post('/post',function(req, res, next){
           }
           // -- ID被りしていないか確認 --
           // (注意)テンプレートリテラルを使うときはバッククオートを使う必要がある
-          var sql = `SELECT COUNT(*) AS "count" FROM article WHERE id = "${strRandom }"`;
+          let sql = `SELECT COUNT(*) AS "count" FROM article WHERE id = "${strRandom }"`;
           // dbを同期処理
-          db.serialize(function(){
+          db.serialize(()=>{
             // SQL文を実行
-            db.get(sql, function(err, row){
+            db.get(sql,(err, row)=>{
               if(err){
                 console.error('ERROR!!!', err);
                 return;
@@ -189,15 +189,15 @@ router.post('/post',function(req, res, next){
     // タグの登録処理
     function(next){
       // foreachの同期処理version
-      async.each(tag,function(i,callback){
+      async.each(tag,(i,callback)=>{
         // 同期処理
-        db.serialize(function(){
+        db.serialize(()=>{
 
           async.series([
             function(next){
               // 登録済みのタグか確認
               sql = `SELECT COUNT(*) AS "count" FROM tag WHERE tagname = "${i}"`;
-              db.get(sql, function(err, row){
+              db.get(sql,(err, row)=>{
                 if(err){
                   console.error('ERROR', err);
                   return;
@@ -219,7 +219,7 @@ router.post('/post',function(req, res, next){
             function(next){
                 // tagdataテーブルからtagIDを取得
                 sql = `SELECT tagID FROM tag WHERE tagname="${i}"`;
-                db.get(sql, function(err, row){
+                db.get(sql,(err, row)=>{
                   if(err){
                     console.error('ERROR', err);
                     return;
@@ -243,7 +243,7 @@ router.post('/post',function(req, res, next){
     function(next){
 
       // ファイル作成
-      fs.writeFile(`./public/sourcecode/${strRandom}.md`,sourcecode,function(err){return});
+      fs.writeFile(`./public/sourcecode/${strRandom}.md`,sourcecode,(err)=>{return});
       // データベースクローズ
       db.close();
       // リダイレクト
@@ -252,7 +252,4 @@ router.post('/post',function(req, res, next){
     }
   ])
 })
-
-
-
 module.exports = router;

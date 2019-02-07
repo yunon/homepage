@@ -1,15 +1,13 @@
-var express = require('express');
-var router = express.Router();
-var fs = require('fs');
-var sqlite3 = require("sqlite3").verbose();
-var async = require('async');
+const express = require('express');
+const router = express.Router();
+const sqlite3 = require("sqlite3").verbose();
 
 /**
  *  サインアップ画面の表示
  *  http://localhost:3000/signup
  */
 router.get('/',function(req, res){
-    var html = (function() {/*
+    let html = (()=>{/*
 
         <form action='/signup' method='post' id="form1">
             <fieldset>
@@ -49,29 +47,27 @@ router.get('/',function(req, res){
         main: html,
         loginStatus : null
     });
-
-
 });
 
 /**
  *  Postを受けてユーザ情報をデータベースに登録
  *  http://localhost:3000/signup
  */
-router.post('/',function(req, res){
+router.post('/',(req, res)=>{
 
     // リクエストを取得
-    var name = req.body.name;
-    var pass = req.body.pass;
-    var url = req.body.redirect;
+    let name = req.body.name;
+    let pass = req.body.pass;
+    let url = req.body.redirect;
     // データベースオープン
-    var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
+    const db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
 
     //TODO 入力チェック
 
     // sql文実行
-    db.serialize(function(){
-        var sql = `INSERT INTO user(name, pass) VALUES("${name}","${pass}")`;
-        db.run(sql,function(err){
+    db.serialize(()=>{
+        let sql = `INSERT INTO user(name, pass) VALUES("${name}","${pass}")`;
+        db.run(sql,(err)=>{
             if(err){
                 console.log(err);
 
@@ -103,7 +99,7 @@ router.post('/',function(req, res){
  * 登録完了画面の表示
  * http://localhost:3000/signup/success
  */
-router.get('/success',function(req, res){
+router.get('/success',(req, res)=>{
     req.query.redirect
 })
 module.exports = router;

@@ -1,16 +1,15 @@
-var express = require('express');
-var router = express.Router();
-var fs = require('fs');
-var marked = require('marked');
-var sqlite3 = require("sqlite3").verbose();
-var async = require('async');
-var myfunc = require('../myfunc.js');
+const express = require('express');
+const router = express.Router();
+const fs = require('fs');
+const marked = require('marked');
+const sqlite3 = require("sqlite3").verbose();
+const myfunc = require('../myfunc.js');
 
 /**
  *  ホームページ
  *  http://localhost:3000/
  */
-router.get('/',function(req, res){
+router.get('/',(req, res)=>{
 
     res.render('homepage.ejs',{
         loginStatus : myfunc.login_html(req.session)
@@ -19,10 +18,10 @@ router.get('/',function(req, res){
 /**
  * ユーザーのプロフィールページを返す
  */
-router.get('/:user',function(req, res, next){
+router.get('/:user',(req, res, next)=>{
 
-    var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
-    var temp = (function(){/*
+    const db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
+    let temp = (function(){/*
          <img src="/image/user_icon/:icon" style='width:50px;heigh:50px;'><br>
          名前 : 
          :name <br>
@@ -30,9 +29,9 @@ router.get('/:user',function(req, res, next){
          :time <br>
     */}).toString().match(/\/\*([^]*)\*\//)[1];
 
-    db.serialize(function(){
-        var sql = `select name, pass, date, icon from user where name = "${req.params.user}"`;
-        db.get(sql,function(err,data){
+    db.serialize(()=>{
+        let sql = `select name, pass, date, icon from user where name = "${req.params.user}"`;
+        db.get(sql,(err,data)=>{
 
             if(err){
                 console.log(err);
@@ -54,27 +53,27 @@ router.get('/:user',function(req, res, next){
  *  ここでmdファイルをhtmlに変換する
  *  url: http://localhost:3000/contents/*
  **/
-router.get('/:sourcedata',function(req, res){
+router.get('/:sourcedata',(req, res)=>{
 
     // publicからmdファイルを読み込む
     fs.readFile(`${__dirname}/../public/sourcecode/${req.params.sourcedata}.md`,'utf8',
     function(err, data){
-        var title, tags, author;
+        let title, tags, author, html, meta;
         // 見つからなかった時
         if(err){
-            var html = '<p> not found </p>';
+            html = '<p> not found </p>';
             title = tags = author = 'not found';
         }else{
             // メタデータを取得 (独自関数)
-            var [meta_json, data2] = getMeta(data);
+            let [meta_json, data2] = getMeta(data);
             data2 = addLineForImg(data2);
             // markdownをhtmlに変換
-            var html = marked(data2);
+            html = marked(data2);
 
             title = meta_json.title;
             tags = `tags  :    ${meta_json.tags}`;
             author = `Author  :      ${meta_json.author}<br>`;
-            var meta = author+tags;
+            meta = author+tags;
         }
 
         res.render('contents_temp.ejs',{
@@ -97,11 +96,11 @@ router.get('/:sourcedata',function(req, res){
 function getMeta(data){
 
     // 返り値(1)
-    var json;
+    let json;
     // 返り値(2)
-    var md;
+    let md;
 
-    var title, tags, author;
+    let title, tags, author;
 
     try{
         // '---'で囲まれた文字列を取得

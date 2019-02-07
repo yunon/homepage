@@ -1,27 +1,26 @@
-var express = require('express');
-var router = express.Router();
-var sqlite3 = require("sqlite3").verbose();
-var async = require('async');
-var myfunc = require('../myfunc.js');
-var fs = require('fs');
+const express = require('express');
+const router = express.Router();
+const sqlite3 = require("sqlite3").verbose();
+const myfunc = require('../myfunc.js');
+const fs = require('fs');
 // multipart/form-dataを受け取るときに使う
-var multer = require('multer');
+const multer = require('multer');
 // アップロード先の指定
-var upload = multer({dest: `./public/image/user_icon`});
+const upload = multer({dest: `./public/image/user_icon`});
 
 /**
  * 設定画面の表示
  * http://localhost:3000/settings
  */
-router.get('/',function(req, res){
+router.get('/',(req, res)=>{
     //ログインチェック
     if(!req.session.loginStatus){
         res.redirect(`/login/?redirect=/settings`);
         return;
     }
 
-    var data = req.session.loginData;
-    var html = (function(){/*
+    let data = req.session.loginData;
+    let html = (()=>{/*
         <form method='post' action="/settings" enctype='multipart/form-data'>
             <fieldset>
                 :error
@@ -63,7 +62,7 @@ router.get('/',function(req, res){
  * 設定の変更を反映する
  * http://localhost:3000/settings
  */
-router.post('/', upload.single('icon'),function(req, res){
+router.post('/', upload.single('icon'),(req, res)=>{
     //　ログインチェック
     if(!req.session.loginStatus){
         res.redirect('/login?redirect=/');
@@ -71,14 +70,15 @@ router.post('/', upload.single('icon'),function(req, res){
     }
 
     // アイコンが置いてあるurl
-    var url_icon = './public/image/user_icon/';
+    const url_icon = './public/image/user_icon/';
     // リクエストの取得
-    var name = req.body.name;
+    let name = req.body.name;
+    let icon;
     // ファイルアップロードがない時の処理
     if(req.file == undefined){
-        var icon = req.session.loginData.icon;
+        icon = req.session.loginData.icon;
     }else{
-        var icon = `${req.file.filename}.jpg`;
+        icon = `${req.file.filename}.jpg`;
         // アイコン更新時、元のアイコン画像データを削除。デフォルト画像の場合は削除しない
         if(req.session.loginData.icon != 'user.jpg'){
             fs.unlink(`${url_icon}${req.session.loginData.icon}`,(err)=>{
@@ -94,11 +94,11 @@ router.post('/', upload.single('icon'),function(req, res){
     // TODO 入力チェック
 
     // データベースオープン
-    var db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
+    const db = new sqlite3.Database("./public/sqlite/sourcedata.sqlite");
 
-    db.serialize(function(){
-        var sql = `UPDATE user SET name = "${name}", icon = "${icon}" WHERE name = "${req.session.loginData.name}"`;
-        db.run(sql,function(err){
+    db.serialize(()=>{
+        let sql = `UPDATE user SET name = "${name}", icon = "${icon}" WHERE name = "${req.session.loginData.name}"`;
+        db.run(sql,(err)=>{
             if(err){
                 // エラーの時(ユーザ名が既に登録されている時)
                 console.log(err);
