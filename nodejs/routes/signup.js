@@ -8,7 +8,6 @@ const sqlite3 = require("sqlite3").verbose();
  */
 router.get('/',function(req, res){
     let html = (()=>{/*
-
         <form action='/signup' method='post' id="form1">
             <fieldset>
                 :message
@@ -21,7 +20,6 @@ router.get('/',function(req, res){
         <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
         <script>
             $('#rd').attr('value',getParam('redirect'));
-
             function getParam(name, url) {
                 if (!url) url = window.location.href;
                 name = name.replace(/[\[\]]/g, "\\$&");
@@ -32,7 +30,6 @@ router.get('/',function(req, res){
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
         </script>
-
     */}).toString().match(/\/\*([^]*)\*\//)[1];
 
     // エラーメッセージ処理
@@ -98,8 +95,9 @@ router.post('/',(req, res)=>{
  * TODO
  * 登録完了画面の表示
  * http://localhost:3000/signup/success
- */
+ *
 router.get('/success',(req, res)=>{
     req.query.redirect
 })
 module.exports = router;
+*/

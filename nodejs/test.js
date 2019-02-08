@@ -14,10 +14,10 @@ var options = {
   method: 'POST',
   headers: headers,
   json: true,
-  form: { name : "tatuki", pass:"unk03", redirect : "/"},
+  form: { name : "test1", pass:"test03", redirect : "/"},
 }
 
 //リクエスト送信
-request('http://localhost:3000/login', function (error, res, body) {
-  console.log(body)
+request( options , function (error, res, body) {
+  console.log(res.caseless)
 })

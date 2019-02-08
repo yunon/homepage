@@ -85,12 +85,12 @@ router.get('/:sourcedata',(req, res)=>{
     })
 });
 
-// ---  関数定義　--- //
+// ---  関数定義 --- //
 /**
  * "md形式のデータから'---'で囲われているメタ情報(json形式)"と、
  * "元データからメタ情報を省いたデータ"の２つを配列で返すメソッド
  * 
- * @param {String} md_data　md形式のデータ 
+ * @param {String} md_data md形式のデータ 
  * @return {String} [json, md_data] 
  */
 function getMeta(data){
@@ -140,7 +140,7 @@ function getMeta(data){
 /**
  * "md形式のデータの<img>タグの後に<br>を付け加えて返す
  * 
- * @param {String} md_data　md形式のデータ 
+ * @param {String} md_data md形式のデータ 
  * @return {String} md_data
  */
 function addLineForImg(data){

@@ -40,7 +40,6 @@ router.get('/',(req, res)=>{
             }
         </style>
         <script>
-
         </script>
     */}).toString().match(/\/\*([^]*)\*\//)[1].replace(/:name/,data.name)
     .replace(/:icon/,data.icon);
@@ -63,7 +62,7 @@ router.get('/',(req, res)=>{
  * http://localhost:3000/settings
  */
 router.post('/', upload.single('icon'),(req, res)=>{
-    //　ログインチェック
+    // ログインチェック
     if(!req.session.loginStatus){
         res.redirect('/login?redirect=/');
         return;

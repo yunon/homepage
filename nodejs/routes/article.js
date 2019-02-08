@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const sqlite3 = require("sqlite3").verbose();
-const fs = require('fs');
 const async = require('async');
 const myfunc = require('../myfunc');
+const fs = require('fs');
 
 /**
  *  記事の投稿画面を表示する
@@ -20,7 +20,6 @@ router.get('/', (req, res)=>{
       <div style="height: 100%; background-color: #a3a3a3">
         <form action="/article/post" method="post" name="form" id="form1" style="height: 100%">
           <fieldset style="height: 100%">
-
             <p>タイトル <input type="text" name="title" required><p>
             <p>タグ <input type="text" name="tag"></p>
             <p>コンテンツ</p>
@@ -36,7 +35,6 @@ router.get('/', (req, res)=>{
         mode: "javascript", lineNumbers: true, autoCloseBrackets: true, theme: "3024-day", 
       }); 
     </script>
-
   */}).toString().match(/\/\*([^]*)\*\//)[1];
 
   res.render('profile.ejs',{
@@ -196,7 +194,7 @@ router.post('/post',(req, res)=>{
           async.series([
             function(next){
               // 登録済みのタグか確認
-              sql = `SELECT COUNT(*) AS "count" FROM tag WHERE tagname = "${i}"`;
+              let sql = `SELECT COUNT(*) AS "count" FROM tag WHERE tagname = "${i}"`;
               db.get(sql,(err, row)=>{
                 if(err){
                   console.error('ERROR', err);
@@ -216,9 +214,9 @@ router.post('/post',(req, res)=>{
                 }
               })
             },
-            function(next){
+            function(){
                 // tagdataテーブルからtagIDを取得
-                sql = `SELECT tagID FROM tag WHERE tagname="${i}"`;
+                let sql = `SELECT tagID FROM tag WHERE tagname="${i}"`;
                 db.get(sql,(err, row)=>{
                   if(err){
                     console.error('ERROR', err);
@@ -243,7 +241,7 @@ router.post('/post',(req, res)=>{
     function(next){
 
       // ファイル作成
-      fs.writeFile(`./public/sourcecode/${strRandom}.md`,sourcecode,(err)=>{return});
+      fs.writeFile(`./public/sourcecode/${strRandom}.md`,sourcecode,(err)=>{return err});
       // データベースクローズ
       db.close();
       // リダイレクト

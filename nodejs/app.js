@@ -4,6 +4,8 @@ const ejs = require('ejs');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const fs = require('fs');
+var sqlite3 = require("sqlite3").verbose();
 
 // cookie-parser(クッキーを利用する際に必要)
 app.use(cookieParser());
